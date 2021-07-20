@@ -1,0 +1,12 @@
+services:
+  app.manager.group:
+    class: AppBundle\Service\GroupManager
+    arguments: [ "@doctrine.orm.entity_manager", "@app.lesson_manager" ]
+
+  app.manager.level:
+    class: AppBundle\Service\LevelManager
+    arguments: [ "@doctrine.orm.entity_manager" ]
+
+  app.manager.client_stage:
+    class: AppBundle\Service\ClientStageManager
+    arguments: [ "@doctrine.orm.entity_manager", "@app.task_manager", "@app.achievement_manager" ]
