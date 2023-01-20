@@ -1,0 +1,26 @@
+@use 'utils/variables';
+
+.container {
+	position: relative;
+
+	.icon {
+		position: absolute;
+		top: 16px;
+		left: 12px;
+	}
+
+	.input {
+		width: 100%;
+		padding: 18px 16px;
+		padding-left: 38px;
+		border-radius: 4px;
+		outline: none;
+		border: none;
+		background-color: variables.$DarkBlackV2transparent60;
+		color: variables.$White;
+
+		&::placeholder {
+			color: variables.$LightGrey;
+		}
+	}
+}

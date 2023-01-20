@@ -1,0 +1,46 @@
+@use 'utils/variables';
+
+.container {
+	position: relative;
+	min-height: 116px;
+
+	.title {
+		font-weight: 500;
+		color: variables.$White;
+	}
+
+	.input {
+		width: 100%;
+		margin-top: 12px;
+		padding: 16px;
+		border: none;
+		outline: none;
+		border-radius: 4px;
+		color: variables.$White;
+		background-color: variables.$LightBlack;
+
+		&::placeholder {
+			color: variables.$LightGrey;
+		}
+	}
+
+	.inputWithCardIcon {
+		padding-left: 56px;
+		transition: padding-left, 0.2s;
+	}
+
+	.inputWithoutCardIcon {
+		padding-left: 16px;
+		transition: padding-left, 0.2s;
+	}
+
+	.inputWithError {
+		border: 1px solid variables.$DarkRed;
+	}
+
+	.error {
+		margin-top: 8px;
+		font-size: 14px;
+		color: variables.$DarkRed;
+	}
+}

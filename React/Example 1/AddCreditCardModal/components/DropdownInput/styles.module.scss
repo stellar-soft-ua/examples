@@ -1,0 +1,46 @@
+@use 'utils/variables';
+
+.container {
+	position: relative;
+	min-height: 116px;
+
+	&:not(:first-child) {
+		margin-top: 12px;
+	}
+
+	.title {
+		font-weight: 500;
+		color: variables.$White;
+	}
+
+	.selectedOptionContainer {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 12px;
+		padding: 14px;
+		border-radius: 4px;
+		cursor: pointer;
+		background-color: variables.$LightBlack;
+
+		.initialTitle {
+			font-size: 13px;
+			font-weight: 400;
+			color: variables.$LightGrey;
+		}
+
+		.selectedOptionTitle {
+			color: variables.$White;
+		}
+	}
+
+	.selectedOptionWithError {
+		border: 1px solid variables.$DarkRed;
+	}
+
+	.error {
+		margin-top: 8px;
+		font-size: 14px;
+		color: variables.$DarkRed;
+	}
+}

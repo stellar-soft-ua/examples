@@ -1,0 +1,37 @@
+@use 'utils/variables';
+
+.container {
+	max-width: 180px;
+	width: 100%;
+	min-height: 116px;
+
+	.title {
+		font-weight: 500;
+		color: variables.$White;
+	}
+
+	.input {
+		width: 100%;
+		margin-top: 12px;
+		padding: 16px;
+		border-radius: 4px;
+		border: none;
+		outline: none;
+		color: variables.$White;
+		background-color: variables.$LightBlack;
+
+		&::placeholder {
+			color: variables.$LightGrey;
+		}
+	}
+
+	.inputWithError {
+		border: 1px solid variables.$DarkRed;
+	}
+
+	.error {
+		margin-top: 8px;
+		font-size: 14px;
+		color: variables.$DarkRed;
+	}
+}

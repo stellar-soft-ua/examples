@@ -1,0 +1,36 @@
+@use 'utils/variables';
+
+.container {
+	max-height: calc(100vh - 72px);
+	position: absolute;
+	top: 72px;
+	left: 246px;
+	right: 0;
+	bottom: 0;
+	padding: 56px;
+	overflow-y: auto;
+	background-color: variables.$DarkBlack;
+
+	.headerSection {
+		display: flex;
+		align-items: center;
+		width: fit-content;
+		cursor: pointer;
+
+		.title {
+			margin-left: 20px;
+			color: variables.$White;
+		}
+	}
+}
+
+.openedContainer {
+	z-index: 1;
+	opacity: 1;
+	transition: opacity 0.3s;
+}
+
+.closedContainer {
+	z-index: -1;
+	opacity: 0;
+}

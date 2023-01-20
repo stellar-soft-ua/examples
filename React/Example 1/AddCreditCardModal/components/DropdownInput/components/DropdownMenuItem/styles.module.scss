@@ -1,0 +1,20 @@
+@use 'utils/variables';
+
+.container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 14px 16px;
+	cursor: pointer;
+	border-top: 0.5px solid variables.$DarkGrey;
+	background-color: variables.$LightBlack;
+
+	.title {
+		font-size: 14px;
+		color: variables.$White;
+	}
+}
+
+.selectedContainer {
+	background-color: variables.$DarkGrey;
+}
