@@ -1,0 +1,246 @@
+{{ 'index__video-banner.css' | asset_url | stylesheet_tag }}
+{%- liquid
+    assign hasmobile = false
+    if section.settings.video != blank
+        assign video_type = section.settings.video.type
+        assign video_id = section.settings.video.id
+    elsif section.settings.video_url != blank 
+        assign video_type = 'html_video'
+    endif
+
+    if section.settings.video_mobile != blank
+        assign video_type_mobile = section.settings.video_mobile.type
+        assign video_id_mobile = section.settings.video_mobile.id
+        assign hasmobile = true
+    elsif section.settings.video_url_mobile != blank 
+        assign video_type_mobile = 'html_video'
+        assign hasmobile = true
+    endif
+-%}
+{%- if video_type == 'vimeo' or video_type_mobile == 'vimeo' -%}
+    <script src="https://player.vimeo.com/api/player.js"></script>
+{%- endif -%}
+<div class="index__video-banner" {% if hasmobile %}data-mobileid="{{ video_id_mobile }}" data-indexvidmob="{{ video_type_mobile }}" {% endif %} data-videoid="{{ video_id }}" data-indexvid="{{ video_type }}" data-videobanner="{{section.id}}" >
+    {%- if section.settings.cover_image != blank and section.settings.cover_image_mobile != blank -%}
+        <img src="{{section.settings.cover_image | img_url: 'master'}}" class="index__video-banner__desktop-cover common-cover" >
+        <img src="{{section.settings.cover_image_mobile | img_url: 'master'}}" class="index__video-banner__mobile-cover common-cover" >
+    {%- elsif section.settings.cover_image != blank and section.settings.cover_image_mobile == blank -%}
+        <img src="{{section.settings.cover_image | img_url: 'master'}}" class="common-cover" >
+    {%- endif -%}
+
+    {%- if hasmobile -%}
+        {% if section.settings.video != blank %}
+            {%- if video_type == 'youtube' -%}
+            <div id="player-{{ video_id }}" class="hide_mobile index__video-banner__frame common-video"></div>
+            {%- elsif video_type == 'vimeo' -%}
+            <div id="player-{{ video_id }}" class="hide_mobile index__video-banner__frame common-video"></div>
+            {%- endif -%}
+        {% elsif section.settings.video_url != blank %}
+            <div class="hide_mobile index__video-banner__video common-video" >
+                <video controls >
+                    <source src="{{ section.settings.video_url }}">
+                </video>
+            </div>
+        {% endif %}
+        {% if section.settings.video_mobile != blank %}
+            {%- if video_type_mobile == 'youtube' -%}
+            <div id="player-{{ video_id_mobile }}" class="hide_desktop index__video-banner__frame common-video"></div>
+            {%- elsif video_type_mobile == 'vimeo' -%}
+            <div id="player-{{ video_id_mobile }}" class="hide_desktop index__video-banner__frame common-video"></div>
+            {%- endif -%}
+        {% elsif section.settings.video_url_mobile != blank %}
+            <div class="hide_desktop index__video-banner__video common-video" >
+                <video controls >
+                    <source src="{{ section.settings.video_url_mobile }}">
+                </video>
+            </div>
+        {% endif %}
+
+    {%- else -%}
+        {% if section.settings.video != blank %}
+            {%- if video_type == 'youtube' -%}
+            <div id="player-{{ video_id }}" class="index__video-banner__frame common-video"></div>
+            {%- elsif video_type == 'vimeo' -%}
+            <div id="player-{{ video_id }}" class="index__video-banner__frame common-video"></div>
+            {%- endif -%}
+        {% elsif section.settings.video_url != blank %}
+            <div class="index__video-banner__video common-video" >
+                <video controls >
+                    <source src="{{ section.settings.video_url }}">
+                </video>
+            </div>
+        {% endif %}
+    {%- endif -%}
+
+
+    <div class="index__video-banner__container">
+        {%- if section.settings.title != blank -%}
+            <div class="index__video-banner__container__title">
+                {{section.settings.title}}
+            </div>
+        {%- endif -%}
+        {%- if section.settings.video_url != blank or section.settings.video != blank -%}
+            <div class="index__video-banner__play">
+                {% comment %} {%- render 'video-play-icon' -%} {% endcomment %}
+                {%- if section.settings.play_btn != blank -%}
+                    <img src="{{section.settings.play_btn | img_url: '123x' }}">
+                {%- elsif section.settings.play_btn_svg != blank -%}
+                    {{play_btn_svg}}
+                {%- endif -%}
+                
+            </div>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+            <div class="index__video-banner__container__subtitle">
+                {{section.settings.subtitle}}
+            </div>
+        {%- endif -%}
+    </div>
+</div>
+{{ 'index__video-banner.js' | asset_url | script_tag }}
+
+<style>
+    [data-videobanner="{{section.id}}"]{
+        margin-top:{{section.settings.padding_top}}px;
+        margin-bottom:{{section.settings.padding_bottom}}px;
+    }
+    @media only screen and (max-width:767px){
+        [data-videobanner="{{section.id}}"]{
+            margin-top:{{section.settings.padding_top_mobile}}px;
+            margin-bottom:{{section.settings.padding_bottom_mobile}}px;
+        }
+    }
+</style>
+
+
+
+{% schema %}
+{
+  "name": "Index Video Banner ",
+  "settings": [
+    {
+        "type": "image_picker",
+        "id": "play_btn",
+        "label": "Play btn"
+    },
+    {
+        "type": "html",
+        "id": "play_btn_svg",
+        "label": "Play btn svg"
+    },
+    {
+        "type": "image_picker",
+        "id": "cover_image",
+        "label": "Cover image"
+    },
+    {
+        "type": "image_picker",
+        "id": "cover_image_mobile",
+        "label": "Cover image mobile"
+    },
+    {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "l’arte della selezione delle materie prime"
+    },
+    {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Subtitle",
+        "default": "#iginiomassari"
+    },
+    {
+        "type": "header",
+        "content": "====💻DESKTOP💻===="
+    },
+    {
+        "type": "text",
+        "id": "video_url",
+        "label": "HTML5 MP4/OGV File URL"
+    },
+    {
+        "type": "header",
+        "content": "====OR===="
+    },
+    {
+        "type": "video_url",
+        "id": "video",
+        "label": "Youtube / vimeo video",
+        "accept": ["youtube", "vimeo"]
+    },
+    {
+        "type": "header",
+        "content": "====📱MOBILE📱===="
+    },
+    {
+        "type": "text",
+        "id": "video_url_mobile",
+        "label": "HTML5 MP4/OGV File URL"
+    },
+    {
+        "type": "header",
+        "content": "====OR===="
+    },
+    {
+        "type": "video_url",
+        "id": "video_mobile",
+        "label": "Youtube / vimeo video",
+        "accept": ["youtube", "vimeo"]
+    },
+    {
+        "type": "header",
+        "content": "Desktop"
+    },
+    {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "label": "Margin top",
+        "default": 0
+    },
+    {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "label": "Margin bottom",
+        "default": 0
+    },
+    {
+        "type": "header",
+        "content": "Mobile"
+    },
+    {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "label": "Margin top mobile",
+        "default": 0
+    },
+    {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "label": "Margin bottom mobile",
+        "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Index Video Banner"
+    }
+  ]
+}
+{% endschema %}

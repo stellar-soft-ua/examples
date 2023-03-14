@@ -1,0 +1,110 @@
+{%- liquid 
+    if section.settings.number > 0
+        assign truncater = section.settings.number
+    else
+        assign truncater = 55
+    endif
+    if section.settings.short_text != blank
+        assign short_text = section.settings.short_text
+    elsif section.settings.page != blank and section.settings.splitter != blank and section.settings.page.content contains section.settings.splitter
+        assign short_text = section.settings.page.content | split: section.settings.splitter | first | append: section.settings.truncate_text
+    elsif section.settings.page != blank
+        assign short_text = section.settings.page.content | truncatewords: truncater, section.settings.truncate_text
+    endif
+    assign pagearr = section.settings.page.content | split: ' '
+    assign size = pagearr.size | times: 1
+    if section.settings.btn_text != blank
+        assign btn_text = section.settings.btn_text
+        if section.settings.btn_text_secondary != blank
+            assign btn_second_text = section.settings.btn_text_secondary
+        else
+            assign btn_second_text = section.settings.btn_text
+        endif
+    endif
+-%}
+{%- if short_text != blank -%}
+    {{ 'custom-page-text.css' | asset_url | stylesheet_tag }}
+
+    <div class="custom-page-text-outer">
+        <div class="custom-page-text-wrapper">
+            <div class="custom-page-text-wrapper__short-text {% unless section.settings.hide_short_text %}custom-page-text-wrapper__short-text--force-open{% endunless %}">
+                {{ short_text }}
+            </div>
+            {%- if size > truncater -%}
+                <div class="custom-page-text-wrapper__long-text custom-page-text-wrapper__long-text--hidden">
+                    {{ section.settings.page.content }}
+                </div>
+                {%- if btn_text != blank -%}
+                <div class="button button--secondary custom-page-text-wrapper__text-btn">
+                    <span>{{ btn_text }}</span>
+                    <span>{{ btn_second_text }}</span>
+                </div>
+                {%- endif -%}
+            {%- endif -%}
+        </div>
+    </div>
+
+    {{ 'custom-page-text.js' | asset_url | script_tag }}
+{%- endif -%}
+
+{% schema %}
+    {
+        "name": "Custom page text",
+        "settings": [
+            {
+                "type": "richtext",
+                "id": "short_text",
+                "label": "Short text",
+                "default": "<p>Babyboom Club è un negozio di abbigliamento bambino e neonato. Hai già fatto un giro nel negozio? Hai visto qualcosa che ti piace o che ti servirebbe? Di sicuro avrai notato come tutto sia particolare e anche un p“strano”, di sicuro colorato </p>",
+                "info":"Not required"
+            },
+            {
+                "type": "checkbox",
+                "id": "hide_short_text",
+                "label": "Hide short text when open?",
+                "default": false
+            },
+            {
+                "type": "text",
+                "id": "splitter",
+                "label": "Word that will split the text",
+                "default": "splitter",
+                "info":"Not required"
+            },
+            {
+                "type": "page",
+                "id": "page",
+                "label": "Page"
+            },
+            {
+                "type": "text",
+                "id": "btn_text",
+                "label": "Btn text",
+                "default": "Leggi tutto"
+            },
+            {
+                "type": "text",
+                "id": "btn_text_secondary",
+                "label": "Second btn text",
+                "default": "Read less"
+            },
+            {
+                "type": "number",
+                "id": "number",
+                "label": "How much words to cut? (if short text = blank)",
+                "default": 55
+            },
+            {
+                "type": "text",
+                "id": "truncate_text",
+                "label": "Truncate ending (if short text = blank)",
+                "default": "..."
+            }
+        ],
+        "presets":[
+            {
+                "name":"Custom page text"
+            }
+        ]
+    }
+{% endschema %}

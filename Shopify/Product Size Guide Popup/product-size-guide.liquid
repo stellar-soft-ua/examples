@@ -1,0 +1,149 @@
+{{ 'product-size-guide.min.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'size-guide.js' | asset_url }}" defer="defer"></script>
+
+
+{% assign count = shop.metafields.underwear.type1.size | minus: 1 %}
+{% assign metafield = shop.metafields.underwear %}
+
+{% liquid
+    assign underwearTypes = ''
+
+    for field in metafield
+        if field[0] contains 'type'
+            assign underwearTypes = underwearTypes | append: field[1][0] | append: ','
+        endif
+    endfor
+
+    assign underwearTypes = underwearTypes | split: ','
+%}
+
+{% capture underwear %}
+    {% for indexU in (0..count) %}
+        <div class="size-guide__table-row">
+            {% for field in metafield %}
+                {% if field[0] contains 'value' %}
+                    {% for index in (0..count) %}
+                        {% if forloop.index0 == indexU %}
+                            <div class="size-guide__table-row-item">
+                                {{ field[1][forloop.index0] }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% endcapture %}
+
+
+{% liquid
+    assign brasTypes = ''
+
+    for bra in shop.metafields.bras
+        if bra[0] contains 'type'
+            assign braType = bra[0] | remove: "type" | plus: 0
+            if braType < 10
+                if bra[1][0] != blank
+                    assign brasTypes = brasTypes | append: bra[1][0] | append: ','
+                endif
+            endif
+        endif
+    endfor
+
+    for bra in shop.metafields.bras
+        if bra[0] contains 'type'
+            assign braType = bra[0] | remove: "type" | plus: 0
+            if braType >= 10
+                if bra[1][0] != blank
+                    assign brasTypes = brasTypes | append: bra[1][0] | append: ','
+                endif
+            endif
+        endif
+    endfor
+    assign brasTypes = brasTypes | split: ','
+%}
+
+{% assign count = shop.metafields.bras.type1.size | minus: 1 %}
+{% assign metafield = shop.metafields.bras %}
+
+
+{% capture bras %}
+    {% for indexU in (0..count) %}
+        <div class="size-guide__table-row">
+            {% for field in metafield %}
+                {% if field[0] contains 'value' %}
+                    {% for index in (0..count) %}
+                        {% assign braValue = field[0] | remove: 'value' | plus: 0 %}
+
+                        {%- if braValue < 10 -%}
+                            {% if forloop.index0 == indexU %}
+                                <div class="size-guide__table-row-item">
+                                    {{ field[1][forloop.index0] }}
+                                </div>
+                            {% endif %}
+                        {%- endif -%}
+
+                        {% if braValue >= 10 %}
+                            {% if forloop.index0 == indexU %}
+                                <div class="size-guide__table-row-item size-guide__table-row-item--order">
+                                    {{ field[1][forloop.index0] }}
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                        
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% endcapture %}
+
+<div class="size-guide">
+    <div class="container">
+        <div class="size-guide__wrap">
+            <div class="size-guide__header">
+                <button class="size-guide__header-close">
+                    {% render 'icon-big-close-dark' %}
+                </button>
+            </div>
+            <div class="size-guide__body">
+                <h3 class="size-guide__body-title">Size Guide</h3>
+                <div class="size-guide__switch">
+                    <div data-guide-tab="UNDERWEAR" class="size-guide__switch-btn active">UNDERWEAR</div>
+                    <div data-guide-tab="BRAS" class="size-guide__switch-btn">BRAS</div>
+                </div>
+            </div>
+            <div data-guide-table="UNDERWEAR" class="size-guide__content active">
+                <div class="size-guide__table">
+                    <div class="size-guide__table-head">
+                        {% for underwearType in underwearTypes %}
+                            <div class="size-guide__table-head-item">{{ underwearType }}</div>
+                        {% endfor %}
+                    </div>
+                    {{ underwear }}
+                </div>
+            </div>
+            <div data-guide-table="BRAS" class="size-guide__content">
+                <div class="size-guide__table">
+                    <div class="size-guide__table-head">
+                        {% for brasType in brasTypes %}
+                            <div class="size-guide__table-head-item">{{ brasType }}</div>
+                        {% endfor %}
+                    </div>
+                    {{ bras }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name": "Product Size Guide",
+        "presets": [
+            {
+                "name": "Product Size Guide"
+            }
+        ]
+    }
+{% endschema %}
