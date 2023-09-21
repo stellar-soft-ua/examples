@@ -1,0 +1,309 @@
+//GreaterLoveForm Materialize
+
+
+/* General */
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: black;
+  opacity: 0.4; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: black;
+  opacity: 0.4;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: black;
+  opacity: 0.4;
+}
+
+input:not([type]):focus:not([readonly]),
+input[type=text]:not(.browser-default):focus:not([readonly]),
+input[type=password]:not(.browser-default):focus:not([readonly]),
+input[type=email]:not(.browser-default):focus:not([readonly]),
+input[type=url]:not(.browser-default):focus:not([readonly]),
+input[type=time]:not(.browser-default):focus:not([readonly]),
+input[type=date]:not(.browser-default):focus:not([readonly]),
+input[type=datetime]:not(.browser-default):focus:not([readonly]),
+input[type=datetime-local]:not(.browser-default):focus:not([readonly]),
+input[type=tel]:not(.browser-default):focus:not([readonly]),
+input[type=number]:not(.browser-default):focus:not([readonly]),
+input[type=search]:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]),
+.greater-love-form textarea:focus {
+  border-bottom: 0;
+  outline: 0;
+}
+
+.form-field-description {
+  margin-bottom: 15px;
+}
+
+
+// Datepicker
+
+.datepicker-date-display,
+.datepicker-table td.is-selected {
+  background: $primary;
+}
+
+.datepicker-table td.is-today,
+.datepicker-cancel,
+.datepicker-clear,
+.datepicker-today,
+.datepicker-done,
+.dropdown-content li > a,
+.dropdown-content li > span {
+  color: $primary;
+}
+
+ul.dropdown-content:not(.browser-default) > li {
+  list-style-type: none;
+  margin: 0;
+}
+
+ul.dropdown-content:not(.browser-default) {
+  padding: 0;
+}
+
+body > .dropdown-content {
+  position: fixed;
+}
+
+
+
+/* Form */
+
+.greater-love-form {
+  background: $beige-bright;
+  padding: 60px 0;
+  @include media(XL) {
+    padding: 40px 0;
+  }
+  @include media(S) {
+    padding: 20px 0;
+  }
+
+  .g-recaptcha > div {
+    margin: 50px auto 0;
+    @include media(S) {
+      margin-top: 0;
+    }
+  }
+
+  h2 {
+    text-align: center;
+    margin: 0 0 80px;
+    @include media(XL) {
+      margin: 0 0 60px;
+    }
+    @include media(S) {
+      margin: 0 0 45px;
+    }
+  }
+
+  .form-field-error {
+    color: $danger;
+  }
+
+  label {
+    font-weight: bold;
+    transition: transform 0.3s $cubic-bezier;
+    font-size: 14px;
+    color: $black;
+    opacity: 0.4;
+    display: block;
+  }
+
+  label:not(.active) {
+    transform: translate(30px, 50px);
+    font-size: 1em;
+    @include media(S) {
+      transform: translate(20px, 40px);
+    }
+  }
+
+  .field-select label:not(.active) {
+    transform: translate(0, 25px);
+  }
+
+  input:not([type]), input[type=text]:not(.browser-default), input[type=password]:not(.browser-default), input[type=email]:not(.browser-default), input[type=url]:not(.browser-default), input[type=time]:not(.browser-default), input[type=date]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=number]:not(.browser-default), input[type=search]:not(.browser-default), textarea.materialize-textarea, textarea {
+    background: $beige-dark;
+    padding: 20px 30px;
+    font-weight: bold;
+    box-sizing: border-box;
+    height: 70px;
+    border: 0;
+    @include media(S) {
+      height: 50px;
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+  }
+
+  textarea {
+    height: 150px;
+  }
+
+  .select-wrapper {
+    &:after {
+      content: '';
+      width: 24px;
+      height: 14px;
+      background: no-repeat url(asset('images/icon-chevron-top-black.svg'));
+      background-size: contain;
+      position: absolute;
+      right: 30px;
+      top: 50%;
+      transform: translate(0, -50%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    svg {
+      display: none;
+    }
+
+    input.select-dropdown {
+      font-size: 1em;
+      color: rgba(0, 0, 0, 0.4);
+    }
+
+    ul {
+      padding: 0;
+      margin: 0;
+
+      li {
+        margin: 0;
+        list-style-type: none;
+
+        span {
+          color: $black;
+          padding: 20px 30px;
+          font-size: 1em;
+        }
+      }
+    }
+  }
+
+  .answer__wrapper {
+    margin: 20px 0 0;
+
+    label {
+      opacity: 1;
+      margin-bottom: 10px;
+      transform: translate(0, 0);
+
+      span {
+        font-size: 1em;
+      }
+    }
+  }
+
+  label[for="theme_checkbox"],
+  label[for="theme_radio"] {
+    transform: translate(0, 0);
+    margin-top: 30px;
+  }
+
+  [type="checkbox"].filled-in:checked + span:not(.lever):after {
+    border-color: $black;
+    background-color: $black;
+  }
+
+  [type="radio"]:checked + span:after,
+  [type="radio"].with-gap:checked + span:before,
+  [type="radio"].with-gap:checked + span:after {
+    border-color: $black;
+  }
+
+  [type="radio"]:checked + span:after,
+  [type="radio"].with-gap:checked + span:after {
+    background-color: $black;
+  }
+
+  .button--primary {
+    border: 0;
+  }
+
+  .field-file {
+    position: relative;
+    padding-top: 25px;
+
+    // This class is necessary for the materialize file input
+    .file-field {
+      display: flex;
+      @include media(S) {
+        display: inline-block;
+        width: 100%;
+      }
+    }
+
+    // A materialize class
+    .file-path-wrapper {
+      flex: 1 1 auto;
+      pointer-events: none;
+
+      .file-path {
+        background: transparent;
+        color: black;
+        font-weight: 400;
+        padding: 0;
+        margin-left: 20px;
+        @include media(S) {
+          margin-left: 0;
+        }
+      }
+    }
+
+    .file-input-wrapper {
+      display: inline-block;
+      font-size: 16px;
+
+      input {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+      }
+
+      label {
+        // Reset the transform which is applied to all labels by default
+        transform: translate(0, 0);
+        opacity: 1;
+        padding: 0 30px;
+        line-height: 66px;
+        border: 2px solid $black;
+        border-radius: 3px;
+        font-weight: bold;
+        color: $black;
+        transition: all 0.3s $cubic-bezier;
+        cursor: pointer;
+      }
+
+      label:hover {
+        background: $black;
+        color: $white;
+      }
+    }
+  }
+}
+
+.greater-love-form .datepicker-container {
+  .select-wrapper {
+    &:after {
+      content: none;
+    }
+
+    input[type=text].dropdown-trigger {
+      background: transparent;
+      padding: 0;
+      font-weight: normal;
+      box-sizing: content-box;
+      height: 3rem;
+    }
+  }
+}

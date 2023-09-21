@@ -1,0 +1,124 @@
+.request_grid_top {
+	text-align: center;
+	width: 100%;
+	display: inline-block;
+}
+.request_grid_top p {
+	font-family: var(--secondary-font); 
+	font-size: 16px;
+	line-height: 26px;
+	color: var(--black-color);
+	text-align: center;
+	margin-bottom: 0px;
+}
+.command-center-header .heading {
+	padding-top: 64px;
+	padding-bottom: 28px;
+}
+.circle-info p {
+	font-size: 16px;
+	line-height: 26px;
+	margin: 16px 0 16px 0;
+	color: var(--text-color); 
+	font-family: var(--secondary-font);
+	font-weight: 400;
+}
+.request_box {
+	margin-top: 80px;
+}
+.request_box .request_box_icon.small-img img {
+	width: 68px;
+	height: 68px;
+	object-fit: cover;
+}
+.request_box .request_box_icon.medium-img img {
+	width: 50%;
+	object-fit: cover;
+}
+.request_box .request_box_title {
+	font-size: 18px;
+	font-family: var(--secondary-font);
+	font-weight: 700;
+	margin-top: 16px;
+}
+.request_box .request_box_button {
+	text-align: center;
+	margin-top: 16px;
+}
+.two-column-success-grid-block .request_box_title span {
+    font-size: 40px;
+    color: var(--text-color);
+    margin-bottom: 60px;
+    display: inline-block;
+    font-weight: 700;
+    font-family: var(--secondary-font);
+}
+.grid-bottom {
+    padding: 32px 0 64px 0;
+}
+.grid-bottom .request_box .request_box_title span {
+	font-size: 21px;
+    color: var(--text-color);
+    font-family: var(--primary-font);
+    font-weight: bold;
+    padding-bottom: 0;
+    display: inline-block;
+    padding-top: 0;
+    margin-bottom: 24px;
+    letter-spacing: 0.5px;
+}
+.grid-bottom .request_box_icon img {
+    max-width: 55px;
+}
+.page-id-1137 .site-inner {
+    min-height: auto;
+}
+.two-column-success-grid-block h2.heading { 
+	font-size: 40px;
+	line-height: 56px;
+	margin-bottom: 16px;
+}
+.two-column-success-grid-block p {
+	font-size: 20px;
+    line-height: 32px;
+    font-style: italic;
+    margin-bottom: 0;
+    font-family: var(--secondary-font);
+}
+@media (max-width: 1024px) {
+	.grid-bottom .request_box_icon img {
+	    max-width: 45px;
+	}
+	.grid-bottom .request_box .request_box_title span {
+	    font-size: 16px;
+	    margin-bottom: 18px;
+	}
+	.request_box {
+	    margin-top: 60px;
+	}
+}
+@media (max-width: 991px) {
+
+}
+@media (max-width: 767px) {
+
+}
+@media (max-width: 639px) {
+	.grid-bottom .request_box .request_box_title span {
+		font-size: 16px;
+	    padding-bottom: 0;
+	    padding-top: 0;
+	    letter-spacing: normal;
+	}
+	.request_box .request_box_title {
+	    margin-top: 5px;
+	}
+	.grid-bottom .request_box_icon img {
+	    max-width: 40px;
+	}
+	.grid-bottom .default-btn {
+	    padding: 8px 24px;
+	    line-height: 21px;
+	    font-size: 14px;
+	}
+}

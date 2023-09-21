@@ -1,0 +1,65 @@
+/*!
+Theme Name:
+Theme URI:
+Author:
+Author URI:
+Version: 1.0
+License: MIT
+Text Domain: theme
+*/
+
+//////////////////////////////////////////
+////////  USE BEM AND OOCSS    //////////
+/////////////////////////////////////////
+
+/*
+BEM & Stickman
+.stick-man
+.stick-man__head
+.stick-man__arms
+.stick-man--blue
+.stick-man--red
+.stick-man__head--small
+
+For JS-Classes
+.js-site-navigation
+
+
+OOCSS & Stickman
+.stick-man
+.stick-man__head
+.skin
+
+= Build it modular and take similar things together,
+to use it all over again in different modules.
+*/
+
+@import "functions";
+@import "rem";
+@import "variables";
+@import "bootstrap";
+@import "grid";
+
+@import "mixins";
+@import "fonts";
+@import "typo";
+@import "global";
+@import "utilities";
+@import "transitions";
+@import "modules/index";
+@import "divi/index";
+@import "sidebars/index";
+@import "components/index";
+@import "templates/index";
+//@import "spacing";
+
+
+//@import "libraries/swipebox";
+@import "libraries/baguettebox";
+
+//@import "materialize";
+//@import "typo";
+//@import "header";
+//@import "navigation";
+//@import "footer";
+

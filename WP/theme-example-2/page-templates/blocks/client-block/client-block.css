@@ -1,0 +1,45 @@
+.client-block h1.heading {
+  font-weight: normal;
+  font-size: 48px;
+  line-height: 67px;
+}
+.client-block h2.heading {
+  font-size: 40px;
+  line-height: 56px;
+}
+.client-block h3.heading {
+  font-size: 31px;
+  line-height: 43px;
+}
+.client-block h4.heading {
+  font-size: 25px;
+  line-height: 35px;
+}
+.client-block h5.heading {
+  font-size: 20px;
+  line-height: 28px;
+}
+.client-block h6.heading {
+  font-size: 16px;
+  line-height: 22px;
+}
+.client-block .client-desc {
+  font-size: 16px;
+  line-height: 26px;
+  font-family: var(--secondary-font);  
+  margin-bottom: 28px;
+}
+.client-block .row {
+  justify-content: center;
+}
+.client-block .why-btn {
+  margin-top: 28px;
+}
+@media (max-width: 991px) {
+  .client-block{
+      padding: 32px 0;
+  }
+  .client-block .mob-w  {
+      max-width: 33.3%;
+  }   
+}

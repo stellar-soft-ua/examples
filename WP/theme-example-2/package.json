@@ -1,0 +1,238 @@
+{
+  "name": "sage",
+  "version": "9.0.10",
+  "author": "Roots <team@roots.io>",
+  "homepage": "https://roots.io/sage/",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/roots/sage.git"
+  },
+  "engines" : {
+    "npm" : ">=6.14.4 <7.0.0",
+    "node" : ">=14.0.0 <14.14.0"
+  },
+  "bugs": {
+    "url": "https://github.com/roots/sage/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "browserslist": [
+    "last 2 chrome versions",
+    "last 2 edge versions",
+    "last 2 firefox versions",
+    "last 2 safari versions",
+    "IE 11"
+  ],
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "prettier",
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:import/errors",
+      "plugin:import/warnings",
+      "plugin:jest/recommended"
+    ],
+    "globals": {
+      "wp": true
+    },
+    "env": {
+      "node": true,
+      "es6": true,
+      "amd": true,
+      "browser": true,
+      "jquery": true
+    },
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true,
+        "globalReturn": true
+      },
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+    },
+    "plugins": [
+      "import",
+      "prettier",
+      "react",
+      "jest"
+    ],
+    "settings": {
+      "import/core-modules": [],
+      "import/ignore": [
+        "node_modules",
+        "\\.(coffee|scss|css|less|hbs|svg|json)$"
+      ],
+      "import/resolver": {
+        "webpack": {
+          "config": "resources/assets/build/webpack.config.js"
+        }
+      },
+      "react": {
+        "version": "detect"
+      }
+    },
+    "rules": {
+      "prettier/prettier": "error"
+    },
+    "overrides": [
+      {
+        "files": [
+          "resources/assets/gutenberg/**/*.js"
+        ],
+        "rules": {
+          "react/react-in-jsx-scope": 0
+        }
+      },
+      {
+        "files": [
+          "resources/assets/gutenberg/blocks/**/*.js"
+        ],
+        "rules": {
+          "react/display-name": 0,
+          "react/prop-types": 0
+        }
+      }
+    ]
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "singleQuote": true,
+    "semi": false
+  },
+  "stylelint": {
+    "rules": {
+      "no-empty-source": null,
+      "at-rule-no-unknown": [
+        true,
+        {
+          "ignoreAtRules": [
+            "extend",
+            "at-root",
+            "debug",
+            "warn",
+            "error",
+            "if",
+            "else",
+            "for",
+            "each",
+            "while",
+            "mixin",
+            "include",
+            "content",
+            "return",
+            "function"
+          ]
+        }
+      ],
+      "no-descending-specificity": null,
+      "value-keyword-case": null,
+      "font-family-no-missing-generic-family-keyword": null,
+      "no-duplicate-selectors": null
+    }
+  },
+  "scripts": {
+    "build": "webpack --progress --config resources/assets/build/webpack.config.js",
+    "build:production": "webpack --env.production --progress --config resources/assets/build/webpack.config.js",
+    "build:profile": "webpack --progress --profile --json --config resources/assets/build/webpack.config.js",
+    "start": "webpack --hide-modules --watch --config resources/assets/build/webpack.config.js",
+    "rmdist": "rimraf dist",
+    "lint": "npm run -s lint:scripts && npm run -s lint:styles",
+    "lint:scripts": "eslint resources/assets/scripts resources/assets/build",
+    "lint:styles": "stylelint \"resources/assets/styles/**/*.{css,sass,scss,sss,less}\"",
+    "lint:php": "vendor/bin/phpcs",
+    "fix:scripts": "prettier --write \"resources/assets/{scripts}/**/*.{js,jsx}\"",
+    "fix:styles": "prettier --write \"resources/assets/{styles,scripts}/**/*.{css,sass,scss}\"",
+    "fix:php": "vendor/bin/php-cs-fixer --verbose fix --config .php_cs_fixer",
+    "fix:all": "npm run fix:styles && npm run fix:scripts && npm run fix:php",
+    "test": "npm run -s lint"
+  },
+  "devDependencies": {
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.2",
+    "@swc/core": "1.2.129",
+    "@wordpress/block-editor": "^5.2.1",
+    "@wordpress/blocks": "^6.25.1",
+    "@wordpress/components": "^12.0.1",
+    "@wordpress/data": "^4.26.1",
+    "@wordpress/date": "^3.13.0",
+    "@wordpress/element": "^2.19.0",
+    "@wordpress/i18n": "^3.17.0",
+    "@wordpress/keycodes": "^2.18.0",
+    "@wordpress/scripts": "^12.6.1",
+    "autoprefixer": "^10.0.1",
+    "browser-sync": "^2.26.13",
+    "browsersync-webpack-plugin": "^0.6.0",
+    "bs-html-injector": "~3.0",
+    "buble-loader": "^0.4.1",
+    "cache-loader": "~1.2.5",
+    "clean-webpack-plugin": "^0.1.18",
+    "copy-globs-webpack-plugin": "^0.2.0",
+    "css-loader": "^0.28.11",
+    "cssnano": "^4.1.10",
+    "eslint": "~4.19.1",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-import": "^2.14.0",
+    "extract-text-webpack-plugin": "~3.0.2",
+    "file-loader": "^6.2.0",
+    "friendly-errors-webpack-plugin": "^1.6.1",
+    "imagemin-mozjpeg": "^9.0.0",
+    "imagemin-webpack-plugin": "^2.4.2",
+    "import-glob": "~1.5",
+    "node-sass": "^6.0.1",
+    "postcss-loader": "^4.0.4",
+    "postcss-safe-parser": "^5.0.2",
+    "resolve-url-loader": "^2.3.2",
+    "rimraf": "^3.0.2",
+    "sass-loader": "~6.0",
+    "style-loader": "^0.23.1",
+    "stylelint": "^8.4.0",
+    "stylelint-config-standard": "~18.2.0",
+    "stylelint-webpack-plugin": "^0.10.5",
+    "uglifyjs-webpack-plugin": "^1.3.0",
+    "url-loader": "^4.1.1",
+    "webpack": "~3.11.0",
+    "webpack-assets-manifest": "^1.0.0",
+    "webpack-dev-middleware": "~2.0.4",
+    "webpack-merge": "~4.1.4",
+    "yargs": "^16.1.0"
+  },
+  "dependencies": {
+    "@wordpress/icons": "^2.9.0",
+    "@wordpress/server-side-render": "^1.20.8",
+    "@popperjs/core": "^2.11.5",
+    "bootstrap": "v5.1.3",
+    "carousel": "^0.0.3",
+    "events": "^3.3.0",
+    "flickity": "^2.2.1",
+    "gsap": "^3.10.4",
+    "imagesloaded": "^5.0.0",
+    "jquery": "^3.3.1",
+    "navigation": "^6.1.0",
+    "popper.js": "^1.14.7",
+    "prettier": "^2.7.1",
+    "scroll-trigger": "^1.0.0",
+    "slideshow": "^1.0.4",
+    "utils": "^0.3.1",
+    "core-js": "^3.8.2",
+    "isomorphic-fetch": "^2.2.1",
+    "prop-types": "^15.8.1",
+    "query-string": "^5.1.1",
+    "ramda": "^0.28.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-habitat": "^1.0.1",
+    "react-redux": "^7.2.6",
+    "redux": "^4.1.2",
+    "redux-first-router": "^2.1.5",
+    "redux-responsive": "^4.3.5",
+    "redux-thunk": "^2.4.1",
+    "remote-redux-devtools": "^0.5.16",
+    "reselect": "^4.1.5",
+    "whatwg-fetch": "^2.0.4"
+  }
+}

@@ -1,0 +1,22 @@
+.btn {
+  font-size: 15px;
+}
+
+.btn-primary, .btn-primary:hover, .btn-outline-primary:hover {
+  color: $white;
+}
+
+.btn-outline-primary {
+  background-color: $white;
+}
+
+
+.btn-outline-secondary {
+  color: $body-color;
+  border-color: $input-border-color;
+
+  &:hover {
+    background-color: $gray-200;
+    border-color: transparent;
+  }
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="45px" height="45px" viewBox="0 0 45 45" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>Facebook round small</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Facebook-round-small" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g>
+            <g id="Social" transform="translate(17.857143, 15.142857)" fill="#000" fill-rule="nonzero">
+                <path d="M5.33333333,5.12820513 L5.33333333,3.60176282 C5.33333333,2.91266026 5.49166667,2.56410256 6.60416667,2.56410256 L8,2.56410256 L8,0 L5.67083333,0 C2.81666667,0 1.875,1.25801282 1.875,3.41746795 L1.875,5.12820513 L0,5.12820513 L0,7.69230769 L1.875,7.69230769 L1.875,15.3846154 L5.33333333,15.3846154 L5.33333333,7.69230769 L7.68333333,7.69230769 L8,5.12820513 L5.33333333,5.12820513 Z" id="Shape"></path>
+            </g>
+            <rect id="Rectangle-2" stroke="#000" stroke-width="0.5" x="0.25" y="0.25" width="44.5" height="44.5" rx="22.25"></rect>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,30 @@
+.card {
+  @include media-breakpoints-down(font-size, 18.5px, (
+      md: 16.5px,
+      sm: 15px
+  ));
+}
+
+.card-columns-2 {
+  .card {
+    margin-bottom: $card-columns-margin;
+
+    .card-link {
+      .icon-arrow {
+        margin-left: 1rem;
+      }
+    }
+  }
+
+  @include media-breakpoint-up(sm) {
+    column-count: 2;
+    column-gap: $card-columns-gap;
+    orphans: 1;
+    widows: 1;
+
+    .card {
+      display: inline-block; // Don't let them vertically span multiple columns
+      width: 100%; // Don't let their width change
+    }
+  }
+}

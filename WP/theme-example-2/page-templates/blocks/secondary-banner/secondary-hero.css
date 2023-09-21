@@ -1,0 +1,59 @@
+.secondary-block {
+	background: var( --nav-color);
+	color: var(--white);
+}
+.padding-half-full-top-bottom{
+	padding: 32px 0 64px;
+}
+.secondary-block .row {
+    align-items: center;
+}
+.secondary-block .text {  
+	font-size: 20px;
+	font-weight: 400; 
+	line-height: 1.6;
+	margin: 16px 0 0 0;
+	padding-right: 40px;
+	font-family: var(--secondary-font);
+	color: var(--white-color);
+}
+.secondary-block .sec-ban-button .default-btn {
+    padding: 9px 25px;
+}
+.secondary-block .sec-ban-button {
+	margin-top: 62px;
+}
+.secondary-block .heading {
+	color: var(--white-color);
+	line-height: normal;
+	margin: 0;
+} 
+.secondary-block-right img {
+	max-width: 568px;
+}   
+.secondary-block-right {
+    text-align: right;
+    position: relative;
+    top: 7px;
+}
+@media (max-width: 1366px) {
+	.secondary-block-right img {
+	    max-width: 100%;
+	} 
+	.secondary-block-right {
+	    top: 0;
+	}
+}
+@media (max-width: 991px) {
+	.secondary-block .text {
+		padding-right: 0px;
+	}
+	.secondary-block .sec-ban-button { 
+	    margin-bottom: 32px;
+	} 
+}
+@media (max-width: 767px) { 
+	.secondary-block {
+	    padding: 10px 0 8px 0;
+	}
+}

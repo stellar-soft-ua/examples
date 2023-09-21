@@ -1,0 +1,136 @@
+// Slider
+
+.et_pb_theme_slider {
+  margin: 60px 0;
+
+  .swiper-container {
+    max-width: 770px;
+  }
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  background: none;
+  width: 25px;
+  margin-top: -29px;
+}
+
+.swiper-button-next {
+  right: 30px;
+}
+
+.swiper-button-prev {
+  left: 30px;
+}
+
+.swiper-button-next svg,
+.swiper-button-prev svg {
+  max-width: 100%;
+  transition: opacity 0.3s $cubic-bezier;
+}
+
+.swiper-button-next:hover svg,
+.swiper-button-prev:hover svg {
+  opacity: 0.8;
+}
+
+
+.theme-slider {
+  h2 {
+    margin: 0 0 80px;
+    text-align: center;
+  }
+
+  .theme-slider__image__wrapper {
+    overflow: hidden;
+    position: relative;
+    padding-top: 54%;
+
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+    }
+  }
+
+  .swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
+    margin: 5px 10px;
+  }
+
+  .swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet.swiper-pagination-bullet-active {
+    margin: 0px 5px;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    transition: all 0.3s $cubic-bezier;
+    margin-left: 0;
+    margin-right: 0;
+    opacity: 0;
+
+    @include media-breakpoint-down(smd) {
+      margin-top: -49px;
+      width: 20px;
+    }
+  }
+
+  .swiper-button-next:hover {
+    margin-right: -10px;
+  }
+
+  .swiper-button-prev:hover {
+    margin-left: -10px;
+  }
+
+  &:hover {
+    .swiper-button-next,
+    .swiper-button-prev {
+      opacity: 1;
+    }
+  }
+
+  // Swiper Controller for both sliders
+
+  .swiper-pagination {
+    position: absolute;
+    bottom: 20px !important;
+
+    span {
+      width: 15px;
+      height: 15px;
+      background: $white;
+      margin: 0 6px !important;
+      opacity: 1;
+      transition: all 0.3s $cubic-bezier;
+      vertical-align: middle;
+    }
+
+    span.swiper-pagination-bullet-active {
+      background: $primary;
+      margin: 0 6px;
+    }
+
+    @include media-breakpoint-down(smd) {
+      position: relative;
+      margin-top: 2px;
+      bottom: unset !important;
+      height: 28px;
+
+      span {
+        background: $gray-300;
+        width: 10px;
+        height: 10px;
+        margin: 0 5px;
+      }
+
+      span.swiper-pagination-bullet-active {
+        width: 16px;
+        height: 16px;
+        background: $primary;
+        margin: 0 3px;
+      }
+    }
+  }
+}

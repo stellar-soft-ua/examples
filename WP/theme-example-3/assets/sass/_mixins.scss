@@ -1,0 +1,30 @@
+//Verläufe
+
+@mixin background-gradient() {
+  background: $primary; /* Old browsers */
+  background: -moz-linear-gradient(top, $secondary 0%, $primary 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, $secondary 0%, $primary 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, $secondary 0%, $primary 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$secondary', endColorstr='$primary', GradientType=0); /* IE6-9 */
+}
+
+/// Stroke font-character
+/// @param  {Integer} $stroke - Stroke width
+/// @param  {Color}   $color  - Stroke color
+/// @return {Style}           - text-shadow
+@mixin stroke($stroke, $color) {
+  text-shadow: stroke($stroke, $color);
+}
+
+// A mixin to create multiple breakpoints an once.
+@mixin media-breakpoints-down($property, $default, $values) {
+  @if $default != null {
+    #{$property}: $default;
+  }
+
+  @each $breakpoint, $value in $values {
+    @include media-breakpoint-down($breakpoint) {
+      #{$property}: $value;
+    }
+  }
+}

@@ -1,0 +1,50 @@
+.cta-with-icon-block .circle-img {
+  margin-bottom: 16px;
+  min-height: 130px;
+}
+.cta-with-icon-block .row {
+  justify-content: center;
+}
+.cta-with-icon-block .circle-info.three-b h1 { 
+  display: block;
+  font-size: 25px;
+  line-height: 25px;
+  font-family: var(--primary-font);
+  font-weight: 700;
+}
+.cta-with-icon-block .circle-info.three-b span .learn {
+  display: inline;
+  font-size:20px;
+  line-height: 26px;
+  margin-top: 16px;
+  font-family: var(--secondary-font); 
+  font-weight: 400;
+}
+.cta-with-icon-block .circle-info p {
+  font-size: 20px;
+  line-height: 1.6;
+  margin-top: 16px;
+  color: var(--bodyText);
+  font-family: var(--secondary-font);
+  font-weight: 400;
+}
+.cta-with-icon-block .command-settings {
+  width: 100%;
+  padding: 40px 20px 0; 
+}
+.cta-with-icon-block .text-link {
+  font-family: var(--secondary-font);  
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+  color: #156294;
+  text-transform: uppercase;
+}
+.cta-with-icon-block .text-link:hover { 
+  text-decoration: underline;
+}
+.cta-with-icon-block a::after {
+  content: '\00BB';
+  font-size: inherit;
+  font-weight: inherit; 
+}

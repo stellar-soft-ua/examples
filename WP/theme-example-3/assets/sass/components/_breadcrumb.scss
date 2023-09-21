@@ -1,0 +1,32 @@
+.breadcrumb {
+  font-size: $smallest-font-size;
+  margin-bottom: 7px;
+  padding-bottom: 7px;
+  margin-top: 5px;
+
+  @include media-breakpoint-up(lg) {
+    border-bottom: $border-width solid $border-color;
+    margin-top: 7px;
+    margin-bottom: 0;
+  }
+
+  &, a {
+    color: $gray-500;
+  }
+
+  a {
+    transition: $transition-base;
+  }
+
+  a:hover {
+    color: $body-color;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .breadcrumb_last {
+    //color: $gray-800;
+  }
+}

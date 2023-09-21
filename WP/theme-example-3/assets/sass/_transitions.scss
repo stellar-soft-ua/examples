@@ -1,0 +1,11 @@
+.modal {
+  &-enter-active, &-leave-active, &-transition {
+    transition: opacity .3s $cubic-bezier, transform .3s $cubic-bezier;
+  }
+
+  &-enter, &-leave-to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+}

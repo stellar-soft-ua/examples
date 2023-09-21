@@ -1,0 +1,1 @@
+jQuery(document).ready(function(e){var r=e("table#myTable tr:not(:first-child)");e("#selectField").on("change",function(){var e=this.value;if("All"!=e){r.filter("[provider="+e+"]").show(),r.not("[provider="+e+"]").hide();r.filter("[provider="+e+"]")}else r.show()})});

@@ -1,0 +1,26 @@
+.values-block h2 {
+  margin-bottom: 15px;
+}
+.values-block .row {
+  justify-content: center;
+}
+.values-block p {
+  font-size: 16px;
+  font-family: var(--secondary-font);
+  margin-bottom: 26px;
+  line-height: 24px;
+}
+.values-block .values-image {
+  max-width: 288px;
+  margin: 20px auto;
+}
+.values-block h4 {
+  font-size: 18px;
+  font-family: var(--secondary-font); 
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--text-color);
+} 
+.values-block .col-lg-6 {
+  width: 50%;
+}

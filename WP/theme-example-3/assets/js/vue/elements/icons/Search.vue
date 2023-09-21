@@ -1,0 +1,18 @@
+<template functional>
+    <svg viewBox="0 0 5 5" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" class="icon-search">
+        <g fill="none" stroke="#0a0a0a">
+            <circle cx="2.1" cy="2" r="1.6" stroke-width=".2"/>
+            <path d="M3.3 3.4l1 1" stroke-width=".5" stroke-linecap="square"/>
+        </g>
+    </svg>
+</template>
+
+<style lang="scss" scoped>
+    svg > g {
+        transition: all .3s $cubic-bezier;
+    }
+
+    svg:hover > g {
+        stroke: $primary;
+    }
+</style>

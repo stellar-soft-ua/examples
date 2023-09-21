@@ -1,0 +1,17 @@
+.advanced-link {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40px;
+
+  &:hover .title {
+    color: $primary !important;
+  }
+
+  .description {
+    margin-bottom: 0.5rem;
+  }
+
+  .text-muted {
+    margin-bottom: 0;
+  }
+}

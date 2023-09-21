@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="45px" height="45px" viewBox="0 0 45 45" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>Mail round small</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Mail-round-small" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g stroke="#373737">
+            <rect id="Rectangle-2" stroke-width="0.5" x="0.25" y="0.25" width="44.5" height="44.5" rx="22.25"></rect>
+            <g id="basic_mail" transform="translate(15.000000, 17.000000)">
+                <rect id="Rectangle-path" x="0" y="0" width="14.4014392" height="11.110967"></rect>
+                <polyline id="Shape" points="0 0 7.20071959 6.00592811 14.4014392 0"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>

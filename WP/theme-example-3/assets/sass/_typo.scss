@@ -1,0 +1,166 @@
+// Reduce the letter spacing for all headings
+@for $i from 1 through 6 {
+  h#{$i}, .h#{$i} {
+    letter-spacing: $headings-letter-spacing;
+    word-break: normal;
+  }
+}
+
+h1, .h1 {
+  line-height: 1.1;
+
+  @include media-breakpoints-down(font-size, 35px, (
+      sm: 28px
+  ));
+
+  &:first-of-type {
+    margin-top: 1rem;
+  }
+}
+
+.the-content {
+  h2, .h2 {
+    margin-top: 50px;
+  }
+
+  h3, .h3 {
+    margin-top: 30px;
+  }
+
+  h2, .h2, h3, .h3, h4 {
+    font-weight: 700;
+  }
+
+  h4, .h4 {
+    @include media-breakpoints-down(font-size, 30px, (
+        sm: 24px
+    ));
+  }
+
+  h5, .h5 {
+    @include media-breakpoints-down(font-size, 22.5px, (
+        sm: 18px
+    ));
+  }
+}
+
+.lead {
+  @include media-breakpoints-down(font-size, 30px, (
+      sm: 20px
+  ));
+}
+
+.heading-outline {
+  color: $white;
+  letter-spacing: -1px;
+  font-weight: 800;
+  @include stroke(1, rgba($body-color, 0.15));
+}
+
+.the-content .heading-bordered {
+  font-weight: 400;
+  font-style: italic;
+  text-align: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  line-height: 1.35;
+
+  @include media-breakpoints-down(font-size, $subheading-font-size, (
+      sm: 20px
+  ));
+
+  @include media-breakpoint-down(md) {
+    margin-left: -$grid-gutter-width / 2;
+    margin-right: -$grid-gutter-width / 2;
+  }
+
+  &:before,
+  &:after {
+    content: '';
+    display: block;
+    background: $border-color;
+    flex: 1 1 auto;
+
+    @include media-breakpoints-down(height, 2px, (
+        md: 1px
+    ));
+  }
+
+  &:before {
+    margin-right: 2rem;
+  }
+
+  &:after {
+    margin-left: 2rem;
+  }
+}
+
+.the-content h1.heading-bordered {
+  font-size: 160%;
+}
+
+body.home h1:not(.heading-bordered):before {
+  content: '';
+  display: block;
+  height: 11px;
+  width: 3.7rem;
+  background: $body-color;
+  transition: width .2s ease-out;
+  margin-bottom: 12px;
+}
+
+[class*="col-"] > p:last-child, .section p:last-child {
+  margin-bottom: 0;
+}
+
+p > a,
+.section--type-text a,
+[class^=et_pb_theme_paragraph] a {
+  color: $primary;
+
+  &:hover {
+    color: $text-muted !important;
+  }
+}
+
+span[disabled] {
+  color: $text-muted;
+  text-decoration: none;
+  cursor: not-allowed;
+}
+
+.section ul, [class^="et_pb_theme_paragraph"] ul, body.divi-disabled .the-content ul {
+  padding-left: 0;
+
+  > li {
+    list-style-type: none;
+    position: relative;
+    padding-left: 10px;
+
+    + li {
+      margin-top: 8px;
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      display: inline-block;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: $body-color;
+      top: rem(14px);
+      left: 0;
+    }
+  }
+}
+
+[class^="et_pb_theme_paragraph"] {
+  h4, .h4, h5, .h5, .h6, h6 {
+    font-size: inherit;
+    font-weight: 700;
+  }
+}

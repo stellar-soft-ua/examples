@@ -1,0 +1,83 @@
+html {
+  @include media-breakpoints-down(font-size, 20px, (
+      md: 18px,
+      sm: 16px
+  ));
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+
+  @include media-breakpoint-down(sm) {
+    &.menu-open {
+      overflow: hidden;
+    }
+  }
+}
+
+img {
+  max-width: 100%;
+}
+
+img, svg {
+  vertical-align: middle;
+}
+
+// Make the body stretch to the display height, at least
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  &.admin-bar {
+    min-height: calc(100vh - 32px);
+
+    .fixed-top {
+      top: 32px;
+    }
+  }
+
+  @media screen and (max-width: 782px) {
+    &.admin-bar {
+      min-height: calc(100vh - 46px);
+
+      .fixed-top {
+        top: 46px;
+      }
+    }
+  }
+
+  &.has-fixed-navbar {
+    @include media-breakpoints-down(padding-top, $navbar-height, (
+        lg: 110px,
+        sm: 105px,
+        xs: 85px
+    ));
+  }
+
+  > main {
+    flex: 1 1 auto;
+  }
+}
+
+[x-cloak] {
+  display: none;
+}
+
+.connect + .connect-top {
+  border-top: 1px solid $border-color;
+
+  @include media-breakpoint-up(lg) {
+    border-width: 2px;
+  }
+}
+
+.anchor {
+  display: block;
+  height: 0;
+  top: -200px;
+  position: relative;
+  visibility: hidden;
+}

@@ -1,0 +1,115 @@
+.circle-img {
+  margin-bottom: 16px;
+  min-height: 130px;
+}
+.explore-grid-block .col-lg-3 .grid_img img {
+  max-height: 155px;
+  object-fit: cover; 
+}
+.explore-grid-block .col-lg-4 .grid_img img {
+  max-height: 380px;
+  object-fit: cover;
+}
+.explore-grid-block .col-lg-6 .grid_img img {
+  max-height: 584px;
+  object-fit: cover;
+}
+.circle-info p {
+  font-size: 16px;
+  line-height: 26px;  
+  margin: 16px 0 0 0;
+  color: var(--text-color);  
+  font-family: var(--secondary-font);  
+  font-weight: 400;  
+  padding: 0 20px;
+}
+.explore_grid_inner_box {
+  display: inline-block;
+  margin-top: 56px;
+      width: 100%;
+}
+.explore-grid-block .grid_img {
+  position: relative;
+  box-shadow: 0 16px 24px -14px rgb(0 0 0);
+}
+
+.explore-grid-block .grid_img .grid_title{
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  color: var(--white-color);
+  transform: translateY(-50%);
+  z-index: 22;
+  font-size: 24px;
+  font-weight: 700;
+  font-family: var(--primary-font);
+}
+.explore-grid-block .overlay {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.66);
+  z-index: 1;
+}
+.explore_dis {
+  font-size: 16px;
+  line-height: 26px;
+  color: var(--text-color); 
+  font-family: var(--secondary-font); 
+}
+.default-btn {
+    text-transform: none;
+}
+.btn-bx{
+  position: relative;
+  margin-top: 16px;
+}
+.btn-bx .bg-red::after {
+  content: '';
+  height: 1px;
+  background: #1b1d24;
+  width: 8%;
+  position: absolute;
+  left: 0;
+  top: 67px;
+  bottom: -13px;
+  right: 0;
+  margin: 0px auto;
+}
+
+@media (max-width: 991px) {   
+  .command-center .row .col-lg-3 .command-settings {
+    padding-bottom: 48px;
+  }
+  .command-center .row .col-lg-3:last-child .command-settings {
+    padding-bottom: 0;
+  }   
+  .explore-grid-block .col-lg-3 .grid_img img {
+    max-height: initial;
+    object-fit: cover; 
+    width: 100%;
+  }
+  .explore-grid-block .col-lg-4 .grid_img img { 
+   max-height: initial;
+    object-fit: cover;
+    width: 100%;
+  }
+  .explore-grid-block .col-lg-6 .grid_img img {
+    max-height: initial;
+    object-fit: cover;
+    width: 100%;  
+  }
+}
+@media (max-width: 991px) {
+  .command-center .container {
+      padding: 0;
+  } 
+}
+@media (max-width: 639px) {
+  .command-center .col-md-6 {
+      flex: 50%; 
+      max-width: 50%; 
+  }
+}

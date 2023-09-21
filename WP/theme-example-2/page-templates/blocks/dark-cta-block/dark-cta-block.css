@@ -1,0 +1,31 @@
+.dark-cta-block{
+  background:#1b1d24;
+  color: var(--white-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-top: 4px solid var(--link-color);
+  padding: 20px 20px 16px;
+  margin-top: 54px;
+  margin-bottom: 0; 
+}
+.dark-cta-block a.default-btn {
+  font-size: 18px;
+  color: var(--link-color); 
+  text-transform: none;
+  padding: 0;
+  line-height: 27px; 
+}
+.dark-cta-block a.default-btn:hover{
+  text-decoration: underline!important;
+}
+.dcta p{
+  color: var(--white-color);
+  font-size: 20px;
+}
+.dark-cta-block a.default-btn::after {
+  content: '\00BB';
+  font-size: inherit;
+  font-weight: inherit;
+}

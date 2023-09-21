@@ -1,0 +1,44 @@
+.component--projects-grid {
+  [class^="col"] {
+    display: flex;
+
+    @include media-breakpoints-down(padding, 12.5px 20px, (
+      md: 10px 20px,
+      sm: 7.5px 20px
+    ));
+
+    .card {
+      cursor: pointer;
+      transition: $transition-base;
+      width: 100%;
+    }
+
+    .card:hover {
+      opacity: 0.8;
+    }
+
+    .project-topic {
+      font-weight: $font-weight-bold;
+    }
+
+    .project-title {
+      hyphens: auto;
+      font-weight: 800;
+
+      @include media-breakpoints-down(font-size, 30px, (
+        sm: 24px
+      ))
+    }
+
+    .card-link {
+      font-size: $small-font-size;
+      font-weight: 600;
+      margin-top: auto;
+
+      .icon-arrow {
+        margin-left: 1rem;
+        width: 20px;
+      }
+    }
+  }
+}

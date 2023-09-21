@@ -1,0 +1,13 @@
+[class^="et_theme_greater_love_form"] {
+  .when-submitting, form.is-submitting .field-submit {
+    display: none;
+  }
+
+  form.is-submitting .when-submitting {
+    display: block;
+  }
+
+  .form-field.is-invalid > .form-field-error {
+    display: block;
+  }
+}

@@ -1,0 +1,29 @@
+.policy-makers p {
+	color: var(--white);
+	font-family: var(--secondary-font);
+	font-size: 18px;
+}
+.policy-makers a {
+	display: inline-block;
+	border-radius: 10px;
+	padding: 8px 24px;
+	line-height: 24px;
+	font-size: 18px;
+	font-weight: 700; 
+	text-transform: uppercase;
+	-webkit-transition: 0.25s;
+	transition: 0.25s; 
+	font-family: var(--secondary-font);
+	
+}
+.learn-more-cta h2{
+	font-size: 31px;
+	margin-bottom: 32px;
+	color: var(--white);
+}
+@media (max-width: 767px) {
+	.policy-makers p {
+		font-size: 14px;
+		    line-height: 18px; 
+}
+}

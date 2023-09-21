@@ -1,0 +1,55 @@
+.banner-heading {
+  padding-top: 0px;  
+  margin-bottom: 16px;  
+  display: inline-block;
+  line-height: normal; 
+}  
+.banner {
+  padding-bottom: 0px;
+  padding-top: 0; 
+} 
+.home-hero-block.banner p {
+  margin-bottom: 0;
+}
+.banner-text {
+	margin-bottom: 61px;
+	color: var(--text-color); 
+	font-size: 20px;  
+	line-height: 32px;   
+  max-width: 555px;
+  font-family: var(--secondary-font); 
+}
+.banner-left-text {
+    padding-top: 31px; 
+}
+.banner-img {
+	text-align: right;
+}
+.banner-img img {
+  max-width: 568px;
+}
+.banner .default-btn {
+  padding: 9px 25px; 
+} 
+@media (max-width: 1199px) {
+  .banner-img img {
+    max-width: 100%; 
+  }  
+}
+@media (max-width: 991px) {
+	.banner-heading {
+	 padding-top: 0px;  
+	} 
+  .banner-img img {
+    max-width: 100%;
+  }
+} 
+@media (max-width: 767px) {
+  .banner-text {
+    max-width: 100%;
+  }
+  .banner-img {
+    text-align: right;
+    margin-top: 32px;
+  }
+}

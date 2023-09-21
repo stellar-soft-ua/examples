@@ -1,0 +1,69 @@
+.four-column-icon-grid-block .row {
+  justify-content: center;
+}
+.command-center-header .heading {
+  padding-bottom: 28px;
+}
+.home .four-column-image-grid-block .member-info{
+  text-align: left;
+}
+.section-small-font .circle-img {
+  margin-bottom: 16px;
+  min-height: 130px;
+}
+.section-small-font .circle-info span {
+  display: block; 
+  font-size: 18px;
+  font-family: var(--secondary-font);  
+  font-weight: 700;  
+  color: var(--text-color); 
+  line-height: 25px; 
+}
+.section-small-font .circle-info p { 
+  line-height: 26px;   
+  margin-top: 16px;
+  color: var(--text-color);  
+  font-family: var(--secondary-font);  
+  font-weight: 400;  
+  font-size: 16px; 
+}
+.section-large-font .circle-info span {
+  font-size: 25px;
+  line-height: 35px;
+  font-family: var(--primary-font);
+  font-weight: 700;
+  color: var(--text-color);
+}
+.section-large-font .circle-info p {
+  font-size: 20px;
+  line-height: 32px;
+  margin-top: 8px;
+} 
+.section-large-font .circle-img {
+  margin-bottom: 16px;
+  min-height: 130px;
+}
+@media (max-width: 991px) {   
+  .command-center .row .col-lg-3 .command-settings {
+    padding-bottom: 48px;
+  }
+  .command-center .row .col-lg-3:last-child .command-settings {
+    padding-bottom: 0;
+  }   
+}
+@media (max-width: 639px) {
+  .command-center .col-md-6 {
+    flex: 50%; 
+    max-width: 50%; 
+  }
+  .section-large-font .circle-info span {
+    font-size: 18px;
+    line-height: 25px;
+  }
+  .section-large-font .command-settings {
+    padding-bottom: 56px;
+  }
+  .section-large-font .row .col-lg-3:last-child .command-settings {
+    padding-bottom: 0;
+  }
+}

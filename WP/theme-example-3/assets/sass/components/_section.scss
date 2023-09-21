@@ -1,0 +1,96 @@
+.section {
+  $padding-x-lg: rem(57px);
+  $padding-x-sm: rem(10px);
+
+  border-top: $border-width solid $border-color;
+
+  @include media-breakpoint-down(md) {
+    border-width: 1px;
+  }
+
+  &.gray {
+    background: $white;
+    transition: .5s;
+
+    &.show {
+      background: $light;
+    }
+  }
+
+  > .header {
+    padding: 1rem $padding-x-lg;
+
+    h2 {
+      margin-bottom: 0;
+    }
+
+    @include media-breakpoint-down(sm) {
+      padding: 1rem $padding-x-sm;
+    }
+  }
+
+  [aria-expanded=true] .icon.chevron {
+    transform: rotate(180deg);
+  }
+
+  .icon.chevron {
+    transform: translateY(0px);
+    transition: $transition-slow;
+
+    &:before {
+      border-width: 1px 1px 0 0;
+
+      @include media-breakpoint-down(sm) {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  .content {
+    font-size: rem(18px);
+    letter-spacing: 0.11px;
+    line-height: 1.5;
+
+    h2, h3 {
+      font-size: inherit;
+      line-height: inherit;
+      font-weight: bolder;
+      margin-bottom: 0;
+    }
+  }
+
+  [class^="section--type"], .content > div > * {
+    padding: rem(25px) $padding-x-lg;
+
+    &.section--type-gallery .header {
+      margin-bottom: rem(33px);
+    }
+
+    @include media-breakpoint-down(sm) {
+      padding: rem(15px) $padding-x-sm;
+
+      &.section--type-file-link,
+      &.section--type-external-link {
+        background: $light;
+        margin-top: 5px;
+      }
+    }
+
+    @include media-breakpoint-up(md) {
+      &.section--type-file-link:nth-child(odd),
+      &.section--type-external-link:nth-child(odd) {
+        background: $light;
+      }
+
+      &.section--type-file-link:nth-child(even),
+      &.section--type-external-link:nth-child(even) {
+        background: $white;
+      }
+    }
+  }
+
+  .section--type-text {
+    columns: 1;
+  }
+}

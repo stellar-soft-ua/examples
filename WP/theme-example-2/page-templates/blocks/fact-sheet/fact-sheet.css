@@ -1,0 +1,48 @@
+.features_sec {
+	background: var(--gray-bg);
+}
+.fact-sheet .row {
+	justify-content: center;
+}
+.features_sec_inner { 
+	margin-top: 47px; 
+}
+.features_sec_inner .col-lg-6 {
+	padding: 0 24px;
+}
+.features_sec_inner .row {
+	margin:0px -24px ;
+}
+.features_box { 
+	padding: 0 0 46px 0px; 
+	height: 100%; 
+}
+.inner_features {
+	display: flex; 
+	flex-flow: column;
+	height: 100%; 
+	align-items: center;
+	width: 100%;
+	text-align: center; 
+	color: var(--black-color);
+	border: solid 1px var(--red-color);
+	border-radius: 5px;
+	padding:34px 16px;
+}
+h3.small_heading {
+	font-weight: 700;
+	font-size:25px;
+	color: var(--black-color);
+	font-family: var(--primary-font); 
+}
+.features_box .text {
+	font-size: 20px; 
+	font-family: var(--secondary-font);
+	margin: 0;
+	padding: 0;   
+}
+@media (max-width: 1246px) { 
+	.features_sec_inner .row {
+	    margin: 0px -15px;
+	}
+}

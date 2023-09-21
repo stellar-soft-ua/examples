@@ -1,0 +1,45 @@
+body.page-template, body.single, body.page {
+  .template--content h1 + h2 {
+    margin-top: -$headings-margin-bottom;
+  }
+
+  .template--content h2 {
+    hyphens: auto;
+  }
+
+  @include media-breakpoint-up(lg) {
+    .et_pb_module_content {
+      //margin: 5rem 0;
+    }
+
+    .isotope-filter {
+      margin: 5rem 0;
+    }
+  }
+
+  @include media-breakpoint-only(md) {
+    .et_pb_module_content {
+      //margin: 3rem 0;
+    }
+  }
+
+  .isotope-filter {
+    .btn {
+      width: 100%;
+      --secondary: #{$primary};
+      border-color: $gray-500;
+
+      &.active {
+        background-color: $gray-200;
+        border-color: $gray-500;
+      }
+
+      &:hover {
+        background-color: var(--secondary);
+        opacity: 0.9;
+      }
+    }
+
+    margin: 3rem 0;
+  }
+}

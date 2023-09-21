@@ -1,0 +1,11 @@
+[class^="et_pb_theme_modal_link"] {
+  background: $primary;
+  padding: 13px 37px 20px 17px;
+  color: $white;
+  transition: $transition-fast;
+  text-decoration: underline;
+
+  &:hover {
+    background: $text-muted;
+  }
+}

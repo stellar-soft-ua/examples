@@ -1,0 +1,8 @@
+hr {
+  margin: rem(50px) 0;
+
+  @include media-breakpoint-down(md) {
+    border-width: 1px;
+    margin: rem(20px) (-$grid-gutter-width / 2);
+  }
+}

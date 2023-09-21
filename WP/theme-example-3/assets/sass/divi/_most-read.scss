@@ -1,0 +1,15 @@
+[class^="et_pb_theme_most_read"] {
+  a {
+    hyphens: auto;
+  }
+
+  a:not(:last-of-type) {
+    &:after {
+      content: ',';
+    }
+  }
+
+  a:hover {
+    color: $black !important;
+  }
+}

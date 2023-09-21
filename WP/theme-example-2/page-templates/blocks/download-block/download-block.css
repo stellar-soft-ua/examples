@@ -1,0 +1,19 @@
+.dwn-blc{
+padding: 64px;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+margin: 0px auto;
+text-align: center;
+}
+.dwn-blc img{
+    box-shadow: 0 16px 24px -14px rgb(0 0 0);
+    width: 50%;
+}
+.dwn-blc p{
+    font-size: 18px;
+    font-weight: 700;
+}
+.dwn-img{
+    padding: 64px 0px 20px 0px;
+}

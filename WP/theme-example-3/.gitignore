@@ -1,0 +1,11 @@
+node_modules/
+bower_components/
+vendor/
+!resources/views/vendor/
+resources/.cache/
+resources/dist/js/
+.idea/
+.cache/
+webpack.custom.js
+*hot-update.*
+.DS_Store

@@ -1,0 +1,165 @@
+@import url('../../../assets/css/variables.css');
+
+/* ------------------ hero css start here ------------------ */
+section.hero-banner {
+    margin-left: calc(-100vw / 2 + 100% / 2);
+    margin-right: calc(-100vw / 2 + 100% / 2);
+    max-width: 100vw;
+    overflow: hidden;
+    position: relative;
+}
+
+/* .hero-banner .row {
+    align-items: center;
+    margin-left: calc(-100vw/2 + 100%/2);
+    margin-right: calc(-100vw/2 + 100%/2);
+    max-width: 100vw;
+} */
+
+.hero-banner .category-right-padding {
+    position: inherit;
+    padding: 0;
+}
+
+.hero-banner .category-left-padding {
+    padding-right: 0;
+}
+
+.hero-banner .right-category-image {
+    min-height: auto !important;
+    max-height: none !important;
+    position: absolute;
+    width: 55%;
+    left: 0;
+    padding-right: 0;
+    height: 100%;
+    padding-left: 0;
+}
+
+.hero-banner .right-category-image img {
+    width: 100%;
+    min-height: 500px !important;
+    object-fit: cover;
+    height: 100%;
+    object-position: center;
+}
+
+.hero-banner .left-category-contant {
+    padding: 75px 0 75px 80px;
+    max-width: 100%;
+    min-height: 592px;
+}
+
+.hero-banner .left-category-contant h1,
+.hero-banner .left-category-contant p {
+    max-width: 100%;
+}
+
+.text-bg {
+    background-color: var(--aiq-color-success);
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+/*.hero-banner {
+     background-color: var(--aiq-secondary-color); 
+    width: 100%;
+    float: left;
+}*/
+
+.hero-banner .read-more {
+    font-size: var(--aiq-font-size-16);
+    line-height: var(--aiq-line-spacing-20);
+    color: var(--aiq-color-white);
+    background-color: var(--aiq-primery-color);
+    padding: 6.5px 15px;
+    border-radius: var(--aiq-border-radius-8);
+    border: 1px solid transparent;
+    display: inline-block;
+}
+
+.hero-banner .read-more:hover {
+    background-color: var(--aiq-color-white);
+    color: var(--aiq-primery-color);
+    border: 1px solid var(--aiq-primery-color);
+}
+
+.hero-banner .left-category-contant .left-hero-head {
+    color: var(--aiq-color-white);
+    /* font-size: var(--aiq-font-size-48);
+    line-height: var(--aiq-line-height-52); */
+    font-size: var(--aiq-font-size-38);
+    line-height: var(--aiq-line-height-48);
+    letter-spacing: -0.5px;
+    margin: 0;
+    padding-bottom: 30px;
+}
+
+.hero-banner .left-category-contant p {
+    color: var(--aiq-color-white);
+    font-size: var(--aiq-font-size-18);
+    line-height: var(--aiq-line-height-26);
+    letter-spacing: 0.5px;
+    margin-bottom: 30px;
+}
+
+.left-category-contant .left-hero-head em {
+    font-style: normal;
+    background: var(--aiq-color-success);
+    color: var(--aiq-color-white);
+    padding: 0 5px;
+    display: inline-block;
+}
+
+@media (max-width: 1200px) {
+    .hero-banner .left-category-contant {
+        padding: 150px 15px 150px 15px;
+    }
+}
+
+@media (max-width: 991px) {
+    .hero-banner .container {
+        padding: 0;
+    }
+    .hero-banner .row {
+        margin: 0;
+    }
+    .hero-banner .right-category-image {
+        position: static;
+        width: 100%;
+        left: 0;
+        padding-right: 0;
+    }
+    .hero-banner .right-category-image img {
+        min-height: auto !important;
+    }
+    .hero-banner .category-left-padding {
+        padding-right: 15px;
+    }
+    .hero-banner .left-category-contant {
+        padding: 40px 0px 40px 0px;
+        min-height: auto;
+    }
+    .hero-banner .left-category-contant .left-hero-head br {
+        display: none;
+    }
+    .hero-banner .left-category-contant .left-hero-head {
+        line-height: 60px;
+    }
+}
+
+@media (max-width: 767px) {
+    .hero-banner .left-category-contant {
+        padding: 40px 0px 40px 0px;
+    }
+    .hero-banner .left-category-contant .left-hero-head br {
+        display: none;
+    }
+    .hero-banner .left-category-contant .left-hero-head {
+        font-size: var(--aiq-font-size-36);
+        line-height: var(--aiq-line-height-46);
+    }
+}
+
+
+/* ------------------ hero css end here ------------------ */

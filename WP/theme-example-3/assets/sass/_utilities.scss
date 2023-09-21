@@ -1,0 +1,68 @@
+.img-cover {
+  object-fit: cover;
+}
+
+@for $i from 1 through length($grid-breakpoints) {
+  $bp: nth(map-keys($grid-breakpoints), $i);
+
+  .columns-#{$bp}-2 {
+    @include media-breakpoint-up($bp) {
+      column-count: 2;
+      column-gap: $grid-gutter-width;
+      orphans: 1;
+      widows: 1;
+    }
+  }
+}
+
+.children-gutter-x {
+  > * + * {
+    margin-left: $grid-gutter-width;
+  }
+}
+
+.children-gutter-x-small {
+  > * + * {
+    margin-left: $grid-gutter-width / 2;
+  }
+}
+
+.children-gutter-y {
+  > * + * {
+    margin-top: $grid-gutter-width;
+  }
+}
+
+@each $spacer, $value in $spacers {
+  .children-gutter-y-#{$spacer} {
+    > * + * {
+      margin-top: $value;
+    }
+  }
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.font-weight-semi-bold {
+  font-weight: $font-weight-semi-bold;
+}
+
+.color-black {
+  color: $black;
+}
+
+.hover-primary:hover {
+  color: $primary;
+}

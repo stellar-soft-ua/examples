@@ -1,0 +1,226 @@
+// NAVIGATION
+.navbar {
+  background: $white;
+  min-height: 0;
+  transition: $transition-base;
+
+  @include media-breakpoint-down(sm) {
+    border-bottom: 1px solid $border-color;
+  }
+
+  @include media-breakpoints-down(padding, 0 0 15px 0, (
+    //md: 0
+  ));
+
+  @include media-breakpoints-down(font-size, 21px, (
+      lg: 18px,
+      sm: 22px
+  ));
+
+  a, a.nav-link {
+    color: $navbar-color;
+    font-weight: bold;
+    transition: opacity 0.15s ease-out;
+
+    &:hover {
+      text-decoration: none;
+
+      @include media-breakpoint-down(sm) {
+        opacity: 0.6;
+      }
+    }
+  }
+
+  .navbar-brand {
+    z-index: 20;
+    padding: 0;
+    width: 162px;
+
+    @include media-breakpoint-down(xs) {
+      width: auto;
+    }
+
+    > .logo {
+      height: 122px;
+      margin-left: 65px;
+      transition: $transition-base;
+
+      @include media-breakpoint-down(lg) {
+        margin-left: 57px;
+        height: 100px;
+      }
+
+      @include media-breakpoint-down(sm) {
+        height: 90px;
+      }
+
+      @include media-breakpoint-down(xs) {
+        margin-left: 20px;
+        height: 70px;
+      }
+    }
+  }
+
+  .menu-button {
+    display: none;
+    margin-right: 20px;
+    margin-top: 10px;
+
+    @include media-breakpoint-down(sm) {
+      display: block;
+    }
+  }
+
+
+  @include media-breakpoint-down(sm) {
+    .navbar-collapse > ul {
+      padding: 10px 20px;
+
+      &:first-of-type {
+        border-top: 1px solid $border-color;
+      }
+
+      border-bottom: 1px solid $border-color-light;
+    }
+
+    .mobile-spacer {
+      margin-top: 10px;
+    }
+  }
+
+  .navbar-nav {
+    justify-content: space-between;
+
+    &:before,
+    &:after {
+      content: '';
+      display: block;
+    }
+
+    &.menu-items {
+      transition: $transition-base;
+
+      @include media-breakpoint-up(md) {
+        margin-top: 65px;
+
+        > li::before {
+          content: '';
+          display: block;
+          height: 2px;
+          width: 0;
+          background: $body-color;
+          transition: width .2s ease-out;
+        }
+
+        > li.active::before, > li:hover::before {
+          width: 100%;
+        }
+      }
+    }
+
+    li {
+      list-style: none;
+      position: relative;
+
+      @include media-breakpoints-down(line-height, 1.5, (
+          sm: 60px
+      ));
+    }
+
+    li > .dropdown-menu {
+      overflow: hidden;
+      //transition: max-height .5s ease-out;
+      padding: 0;
+      display: block;
+      border: none;
+      font-size: inherit;
+
+      > li {
+        line-height: rem(40px);
+
+        @include media-breakpoints-down(font-size, 19px, (
+            lg: 15px
+        ));
+
+      }
+
+      @include media-breakpoint-down(sm) {
+        padding: 0;
+
+        > li {
+          margin: 0.5rem 0;
+          line-height: 1.6;
+        }
+      }
+
+      @include media-breakpoint-up(md) {
+        max-height: 0;
+        margin: 0;
+        position: absolute;
+        background: $white;
+        z-index: 10;
+        left: -100vw;
+        padding: 0 100vw;
+
+        > li:first-of-type {
+          margin-top: rem(20px);
+        }
+
+        > li:last-of-type {
+          margin-bottom: rem(20px);
+        }
+      }
+
+      > li a {
+        transition: opacity 0.15s ease-out;
+        white-space: nowrap;
+
+        &:hover {
+          opacity: 0.6;
+        }
+      }
+    }
+
+    @include media-breakpoint-up(md) {
+      li:hover > .dropdown-menu {
+        max-height: 1000px;
+        //border-bottom: 1px solid $border-color;
+      }
+    }
+  }
+
+  .menu-mobile-nav {
+    font-size: 15px;
+
+    li {
+      line-height: 40px;
+    }
+
+    a {
+      font-weight: $font-weight-normal;
+    }
+  }
+}
+
+@include media-breakpoint-up(md) {
+  body.scrolled .navbar {
+    border-bottom: $border-width solid $border-color;
+
+    .navbar-brand > .logo {
+      height: 76px;
+    }
+
+    .navbar-nav.menu-items {
+      margin-top: 49px;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  body.menu-open .navbar {
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    bottom: 0;
+  }
+}

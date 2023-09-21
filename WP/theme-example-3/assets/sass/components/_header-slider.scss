@@ -1,0 +1,35 @@
+// Header Slider
+.home-slider {
+  height: 100vh;
+
+  .home-slider__image__wrapper {
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      @media (max-aspect-ratio: 9/12) {
+        height: 100%;
+        max-width: none;
+        width: auto;
+      }
+    }
+  }
+  .home-slider__content {
+    opacity: 0;
+    transition: opacity 0.5s 1s $cubic-bezier;
+
+    .home-slider__statement {
+      background: red;
+      padding: 40px;
+    }
+  }
+  .swiper-slide-active .home-slider__content {
+    opacity: 1;
+  }
+}

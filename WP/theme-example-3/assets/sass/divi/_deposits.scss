@@ -1,0 +1,128 @@
+[class^="et_pb_theme_deposits"] {
+  .container + .container {
+    margin-top: 40px;
+  }
+
+  .bootstrap-select {
+    width: 100% !important;
+  }
+
+  .deposit--item {
+    padding: 40px 0;
+    font-size: $small-font-size;
+
+    > .row {
+      height: 100%;
+    }
+
+    .cover {
+      display: block;
+      background: $primary;
+      height: 100%;
+
+      &:hover .preview {
+        transform: translateX(5px);
+      }
+
+      .cover-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 1rem;
+        color: $white;
+        font-weight: $headings-font-weight;
+        overflow: hidden;
+        height: 100%;
+      }
+
+      .title {
+        float: left;
+        display: block;
+        max-width: 100%;
+        letter-spacing: -0.4px;
+        line-height: 1.35;
+        hyphens: auto;
+        margin-bottom: auto;
+
+        @include media-breakpoints-down(font-size, 30px, (
+            sm: 24px
+        ));
+      }
+
+      .preview {
+        float: left;
+        margin-top: 25px;
+        max-width: 40%;
+        box-shadow: $box-shadow-sm;
+        transform: translateX(0);
+        transition: $transition-base;
+        flex-shrink: 0;
+      }
+    }
+
+    .icon.chevron {
+      transform: scale(0.7);
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+
+    .files {
+      margin: auto 0 20px 0;
+      padding-top: 40px;
+
+      &:empty {
+        padding-top: 0;
+      }
+
+      .file a {
+        text-decoration: underline;
+        color: $body-color;
+        font-weight: $font-weight-semi-bold;
+        font-size: 15px;
+
+        &:hover {
+          color: $primary;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  &:not(.compact) {
+    .deposit--item {
+      border-top: $border-width solid $border-color;
+
+      &:last-of-type {
+        padding-bottom: 0;
+      }
+
+      @include media-breakpoint-down(md) {
+        border-width: 1px !important;
+      }
+    }
+  }
+
+  &.compact {
+    .container:first-of-type {
+      margin: 0 -10px;
+      width: calc(100% + 20px);
+    }
+
+    .deposit--item {
+      padding: 10px;
+      //display: flex;
+      //flex-direction: column;
+      //align-items: center;
+      > .row {
+        justify-content: center;
+
+        > div {
+          max-width: 520px;
+        }
+      }
+    }
+  }
+}

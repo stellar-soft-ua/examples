@@ -1,0 +1,215 @@
+/* hide divi builder frontend editor button */
+#et_pb_fb_cta {
+    display: none !important;
+}
+
+/* Akkordeon */
+.et-pb-all-modules .et_pb_theme_accordeon_title:before,
+.et_pb_saved_layouts_list .et_pb_theme_accordeon_title:before {
+    content: '\70' !important;
+}
+
+/* Angebots Block */
+.et-pb-all-modules .et_pb_theme_angebote:before,
+.et_pb_saved_layouts_list .et_pb_theme_angebote:before {
+    /*content: '\61' !important;*/
+    height: 32px;
+    width: 32px;
+    background: url('resources/assets/dist/images/admin/angebotsblock.svg') no-repeat;
+    content: '' !important;
+    opacity: 0.6;
+}
+
+/* Bild */
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_image:before {
+    content: '\26' !important;
+}
+
+/* Bild-Slider */
+.et-db #et-boc .et-fb-modules-list .et_pb_theme_slider:before,
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_slider:before{
+    content: '\53' !important;
+}
+
+/* Buttons */
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_button:before {
+    content: '\65' !important;
+}
+
+/* Galerie */
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_gallery:before {
+    content: '\27' !important;
+}
+
+/* Informations Blatt */
+.et-db #et-boc .et-fb-modules-list .et_pb_theme_gray_sheet:before {
+    content: '\56' !important;
+}
+
+.et-pb-all-modules .et_pb_theme_carts_image:hover:before,
+.et_pb_saved_layouts_list .et_pb_theme_carts_image:hover:before {
+    opacity: 1;
+}
+
+.et-pb-all-modules .et_pb_theme_carts:hover:before,
+.et_pb_saved_layouts_list .et_pb_theme_carts:hover:before {
+    opacity: 1;
+}
+
+.et-pb-all-modules .et_pb_theme_kompakt:hover:before,
+.et_pb_saved_layouts_list .et_pb_theme_kompakt:hover:before {
+    opacity: 1;
+}
+
+/* Kopfbild */
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_image:before {
+    content: '\26' !important;
+}
+
+/* Lexikon */
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_header_title:before,
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_title:before {
+    content: '\70' !important;
+}
+
+.et-pb-all-modules .et_pb_theme_product_detail:hover:before,
+.et_pb_saved_layouts_list .et_pb_theme_product_detail:hover:before {
+    opacity: 1;
+}
+
+/* Text */
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_text:before,
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_paragraph:before{
+    content: '\28' !important;
+}
+
+/* Formular */
+.et-db #et-boc .et-fb-modules-list .et_theme_greater_love_form:before {
+    content: '\31' !important;
+}
+
+/* Trenner */
+.et-db #et-boc .et-fb-modules-list .et_pb_theme_bottom_border:before {
+    content: '\64' !important;
+}
+
+.et-db #et-boc .et-fb-modules-list .et_pb_theme_location:hover:before {
+    opacity: 1;
+}
+
+/* Team Mitglied */
+.et-db #et-boc .et-fb-modules-list .et_pb_theme_team_member:before {
+    content: '\47' !important;
+}
+
+/* Call to Action */
+.et-db #et-boc .et-fb-modules-list .et_pb_theme_call_to_action:before {
+    content: '\65' !important;
+}
+
+/* Info Box */
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_box:before {
+    content: '\28' !important;
+}
+
+/* Content Teaser */
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_shout_out_box:before {
+    content: '\61' !important;
+}
+
+/* Big Header Image */
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_header_image:before {
+    content: '\26' !important;
+}
+
+/* Podcast Teaser */
+.et-db #et-boc .et-fb-modules-list .et_pb_theme_podcast_teaser:before {
+    content: '\69' !important;
+}
+
+/* Shout out Box */
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_portrait_block:before {
+    content: '\36' !important;
+}
+
+/* Home Slider */
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_header_slider:before,
+.et-db #et-boc .et-fb-modules-list .et_fb_review_slider:before {
+    content: '\53' !important;
+}
+
+/* Divider */
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_divider:before {
+    content: '\64' !important;
+}
+
+/* Events */
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_news:before {
+    content: '\63' !important;
+}
+
+/* Carts */
+.et-db #et-boc .et-fb-modules-list .et_pb_theme_carts:before {
+    content: '\50' !important;
+}
+
+/* Map */
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_map:before {
+    content: '\59' !important;
+}
+
+/* Time Snaps */
+.et-db #et-boc .et-fb-modules-list .et_pb_theme_time_snaps:before {
+    content: '\7c' !important;
+}
+
+/* Video */
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_video_youtube:before {
+    content: "q" !important;
+}
+
+/* Code */
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_code:before {
+    content: 't' !important;
+}
+
+/* Aktuelle Aktivitäten */
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_recent_activities:before {
+    content: 'e' !important;
+}
+
+/* Aktuelle Projekte */
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_current_projects:before {
+    content: '{' !important;
+}
+
+/* Modal Link */
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_modal_link:before {
+    content: 'V' !important;
+}
+
+/* Oft gelesen */
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_most_read:before {
+    content: '3' !important;
+}
+
+/* Publikationen */
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_deposits:before {
+    content: '/' !important;
+}
+
+/* Themen Übersicht */
+.et-db #et-boc .et-fb-modules-list .et_fb_theme_topic_overview:before {
+    content: '6' !important;
+}
+
+
+.et-db #et-boc .et-fb-columns-layout li {
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: -.5px;
+}
+
+.et-fb-columns-layout li:after {
+    display: block;
+}

@@ -1,0 +1,48 @@
+.icon, [class^="icon"] {
+  width: 20px;
+  cursor: pointer;
+  height: 20px;
+}
+
+.icon-arrow {
+  width: 25px;
+}
+
+.icon.chevron {
+  $size: 25px;
+  height: $size * 1.5;
+  width: $size * 2;
+  display: flex;
+
+  &:before {
+    border-style: solid;
+    border-width: 2px 2px 0 0;
+    content: '';
+    display: inline-block;
+    height: $size;
+    left: 0;
+    position: relative;
+    top: 0;
+    vertical-align: top;
+    width: $size;
+    margin: 0 auto;
+    transition: $transition-base;
+    transform: rotate(0deg);
+  }
+
+  &.top:before {
+    transform: rotate(-45deg);
+  }
+
+  &.right:before {
+    transform: rotate(45deg);
+  }
+
+  &.bottom:before {
+    transform: rotate(135deg);
+  }
+
+  &.left:before {
+    transform: rotate(-135deg);
+  }
+}

@@ -1,0 +1,100 @@
+// FOOTER
+footer {
+  color: $gray-800;
+
+  @include media-breakpoints-down(font-size, 17px, (
+      sm: 14px
+  ));
+
+  @include media-breakpoints-down(letter-spacing, 0.11px, (
+      sm: 0.09px
+  ));
+
+  @include media-breakpoint-up(lg) {
+    padding: 0 10px;
+  }
+}
+
+.footer--content {
+  background: $primary;
+  color: $black;
+
+  @include media-breakpoint-up(lg) {
+    padding: rem(25px) rem(55px);
+  }
+
+  .menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .aplus-logo {
+    display: block;
+    height: 40px;
+
+    svg {
+      height: 100%;
+      width: auto;
+
+      path {
+        fill: $black !important;
+        transition: $transition-fast;
+      }
+
+      &:hover {
+        path {
+          fill: #fff !important;
+        }
+      }
+    }
+  }
+
+  .footer-nav li {
+    font-weight: $font-weight-bold;
+    line-height: rem(48px);
+
+    @include media-breakpoints-down(font-size, 17px, (
+        sm: 15px
+    ));
+
+    &:not(:last-of-type) {
+      //margin-bottom: 1.5rem;
+    }
+  }
+
+  a {
+    color: $black;
+    display: inline-block;
+  }
+
+  a:hover, p > a:hover {
+    color: $white !important;
+    text-decoration: none;
+  }
+
+  // Remove bottom paragraph margin on last paragraph
+  p:last-of-type:last-child {
+    margin-bottom: 0;
+  }
+
+  .footer-nav a:hover {
+    text-decoration: none;
+  }
+
+  .social svg:hover {
+    filter: invert(1);
+    opacity: 1;
+  }
+
+  @include media-breakpoint-down(md) {
+    .row > div {
+      border-top: 1px solid $primary-light;
+      padding: 1rem $grid-gutter-width / 2;
+    }
+  }
+}
+
+.footer--secondary {
+  padding: rem(25px) rem(55px);
+}

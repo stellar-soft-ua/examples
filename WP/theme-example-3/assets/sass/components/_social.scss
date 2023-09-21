@@ -1,0 +1,17 @@
+.social {
+  font-size: rem(16px);
+
+  div {
+    margin-bottom: rem(14px);
+  }
+
+  svg {
+    transition: $transition-fast;
+    width: rem(54px);
+    height: rem(54px);
+  }
+
+  svg:hover {
+    opacity: 0.7;
+  }
+}

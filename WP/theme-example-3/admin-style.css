@@ -1,0 +1,27 @@
+/* WP Admin Forms */
+.tagline {
+    margin-top: 10px;
+}
+.tagline input {
+    width: 100%;
+}
+
+.cf-container__fields > .cf-complex.cf-complex--grid > .cf-field__body > .cf-complex__groups > .cf-complex__group > .cf-complex__group-head {
+    background-color: #29c4a9 !important;
+    color: white;
+    font-weight: bold;
+}
+
+.cf-container__fields > .cf-complex.cf-complex--grid > .cf-field__body > .cf-complex__groups > .cf-complex__group > .cf-complex__group-body > .cf-complex > .cf-field__body > .cf-complex__groups > .cf-complex__group > .cf-complex__group-head {
+    background-color: #4c5866 !important;
+    color: white;
+    font-weight: bold;
+}
+
+.cf-complex__group-action {
+    color: white !important;
+}
+
+#after_title-sortables {
+    margin-top: 10px;
+}

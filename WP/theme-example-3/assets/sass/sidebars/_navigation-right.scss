@@ -1,0 +1,50 @@
+.sidebar-navigation-right {
+  @include media-breakpoints-down(font-size, 13px, (
+    sm: 17px
+  ));
+
+  .widgettitle {
+    display: none;
+  }
+
+  @include media-breakpoint-down(sm) {
+    flex-direction: column-reverse;
+
+    .widget_icl_lang_sel_widget {
+      margin-top: 1rem;
+    }
+
+    &.navbar-nav > li {
+      line-height: 2;
+    }
+  }
+
+  @include media-breakpoint-only(md) {
+    position: absolute;
+    top: 0;
+    right: 2rem;
+  }
+
+  @include media-breakpoint-up(md) {
+    margin-top: 25px;
+
+    .widget_search {
+      display: flex;
+      margin-left: 35px;
+    }
+  }
+
+  // Language Switcher
+  .wpml-ls-link {
+    font-weight: normal;
+    padding: 0 4px;
+
+    &:hover {
+      color: $link-hover-color-light;
+    }
+  }
+
+  .wpml-ls-legacy-list-horizontal {
+    padding: 0;
+  }
+}

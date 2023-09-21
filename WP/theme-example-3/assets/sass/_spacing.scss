@@ -1,0 +1,61 @@
+// Spacing
+.space--big {
+  margin-bottom: 160px;
+  @include media(XL) {
+    margin-bottom: 120px;
+  }
+  @include media(L) {
+    margin-bottom: 100px;
+  }
+  @include media(S) {
+    margin-bottom: 80px;
+  }
+}
+.space--medium {
+  margin-bottom: 120px;
+  @include media(XL) {
+    margin-bottom: 100px;
+  }
+  @include media(L) {
+    margin-bottom: 80px;
+  }
+  @include media(S) {
+    margin-bottom: 60px;
+  }
+}
+.space--medium-2 {
+  margin-bottom: 100px;
+  @include media(XL) {
+    margin-bottom: 80px;
+  }
+  @include media(L) {
+    margin-bottom: 60px;
+  }
+  @include media(S) {
+    margin-bottom: 50px;
+  }
+}
+.space--smaller {
+  margin-bottom: 80px;
+  @include media(XL) {
+    margin-bottom: 60px;
+  }
+  @include media(L) {
+    margin-bottom: 50px;
+  }
+  @include media(S) {
+    margin-bottom: 35px;
+  }
+}
+.space--small {
+  margin-bottom: 50px;
+  @include media(XL) {
+    margin-bottom: 35px;
+  }
+  @include media(L) {
+    margin-bottom: 30px;
+  }
+  @include media(S) {
+    margin-bottom: 25px;
+  }
+}

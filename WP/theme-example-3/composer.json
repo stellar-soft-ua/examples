@@ -1,0 +1,20 @@
+{
+    "name": "theme",
+    "description": "Theme",
+    "authors": [
+        {
+            "name": "Theme",
+            "email": "account@theme.ch"
+        }
+    ],
+    "require": {
+        "leafo/scssphp": "0.6.7",
+        "htmlburger/carbon-fields": "^3.1",
+        "wpmetabox/meta-box": "^5.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "THEME\\Theme\\": "src/"
+        }
+    }
+}

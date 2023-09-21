@@ -1,0 +1,39 @@
+// Accordeon
+
+.theme-accordeon {
+  h2 {
+    margin: 0 0 80px;
+    text-align: center;
+  }
+  .theme-accordeon__item {
+    border-top: 2px solid black;
+
+    &:last-child {
+      border-bottom: 2px solid black;
+    }
+    .theme-accordeon__content {
+      display: none;
+      padding: 0 50px 50px 110px;
+    }
+    .theme-accordeon__title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0;
+      padding: 30px 50px 30px 110px;
+      cursor: pointer;
+
+      svg {
+        vertical-align: middle;
+
+        path.minusser {
+          transition: opacity 0.3s $cubic-bezier;
+        }
+      }
+    }
+  }
+
+  .theme-accordeon__item.active svg path.minusser {
+    opacity: 0;
+  }
+}

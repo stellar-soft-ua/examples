@@ -1,0 +1,107 @@
+.input-group-transparent {
+  background: $white;
+  border: $input-border-width solid $input-border-color;
+
+  &:focus-within {
+    box-shadow: $btn-focus-box-shadow;
+  }
+
+  > input, > input:focus {
+    border: none;
+    box-shadow: none;
+  }
+
+  .input-group-append {
+    padding-right: $input-padding-x;
+
+    & > * {
+      background: transparent;
+      border: none;
+    }
+  }
+}
+
+// A button that is used for a custom select dropdown by bootstrap-select
+.btn.btn-select, .btn.btn-select-round {
+  background: $white;
+  border-radius: 0;
+  border: $input-border-width solid $input-border-color;
+  box-shadow: none;
+  outline: none;
+  font-weight: $input-font-weight;
+  color: $gray-800;
+  font-size: $input-font-size;
+  padding: $input-padding-y $input-padding-x;
+
+  &[aria-expanded="true"] {
+    z-index: 1010;
+  }
+
+  &.btn-select-round {
+    border-radius: 5rem;
+    font-size: 15px;
+    padding: $dropdown-padding-y $dropdown-item-padding-x;
+    font-weight: $font-weight-semi-bold;
+    border-color: $dark;
+
+    &[aria-expanded="true"] {
+      background: $gray-200;
+    }
+
+    + .dropdown-menu {
+      $distance: ($input-btn-padding-y * 2 + $input-font-size / $line-height-base);
+      margin-top: -$distance;
+      padding-top: $distance;
+
+      // Since the menu is designed to fit exactly to the button width, this must be the same.
+      width: 100%;
+      border-radius: 0 0 $input-font-size $input-font-size;
+
+      li a {
+        font-size: 15px;
+        font-weight: $font-weight-semi-bold;
+      }
+    }
+  }
+}
+
+// Fix color of dropdown link hover
+.dropdown-item:not([href]):hover {
+  color: $dropdown-link-hover-color;
+}
+
+// Set dropdown icon
+.dropdown-toggle {
+  $size: 16px;
+
+  &:after {
+    border-style: solid;
+    border-width: 1px 1px 0 0;
+    border-color: $body-color;
+    content: '';
+    display: inline-block;
+    height: $size;
+    vertical-align: top;
+    width: $size;
+    transition: $transition-base;
+    transform: rotate(135deg);
+    position: absolute;
+    right: 22px;
+
+    @include media-breakpoints-down(top, 10px, (
+      md: 8px,
+      sm: 7px
+    ));
+  }
+
+  &[aria-expanded="true"]:after {
+    top: 18px;
+    transform: rotate(-45deg);
+  }
+}
+
+// A rounded select dropdown
+label {
+  font-size: $small-font-size;
+  font-weight: $font-weight-semi-bold;
+}

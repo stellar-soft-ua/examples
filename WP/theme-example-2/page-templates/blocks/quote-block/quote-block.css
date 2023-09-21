@@ -1,0 +1,31 @@
+.quote-block h3 {
+  font-size: 31px;
+  line-height: normal;
+  color: var(--black-color);
+}
+.quote-block h2 {
+  font-size: 31px;
+  line-height: normal;
+  color: var(--black-color);
+  text-align: center;
+  font-weight: normal;
+  font-style: italic;
+}
+.quote-block h2 em {
+  border: none;
+  font-style: italic;
+}
+@media (max-width: 640px) {
+  .quote-block h3 {
+    font-size: 19px;
+    line-height: 27px;
+  }
+  .quote-block h2 {
+    font-size: 19px;
+    line-height: 27px;
+  }
+  .quote-block p {
+    font-size: 14px;
+    line-height: 22px;
+  }
+}

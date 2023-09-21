@@ -1,0 +1,90 @@
+// GreaterLoveForm Standard
+
+.greater-love-form {
+  font-size: 18px;
+
+  .form-field-error {
+    font-size: 14px;
+    color: red;
+  }
+
+  .row {
+    display: flex;
+    flex-flow: wrap;
+
+    .form-field {
+      margin-bottom: 30px;
+
+      label {
+        display: block;
+        font-weight: 700;
+        font-size: 14px;
+        text-transform: uppercase;
+        margin-bottom: -4px;
+      }
+      input:not([type="radio"]):not([type="checkbox"]),
+      textarea,
+      select {
+        width: 100%;
+        border: 2px solid $black;
+        @include border-radius(10px);
+        padding: 8px 15px;
+        @include transition(all 0.3s $cubic-bezier);
+      }
+      textarea {
+        height: 150px;
+      }
+      input:not([type="radio"]):not([type="checkbox"]):focus,
+      textarea:focus,
+      select:focus {
+        outline: none;
+        border-color: $blue;
+      }
+
+      .select__wrapper {
+        position: relative;
+
+        &:after {
+          content: '';
+          background: url(resources/assets/dist/images/icon-arrow-down-black.svg);
+          width: 22px;
+          height: 12px;
+          position: absolute;
+          right: 15px;
+          top: 50%;
+          @include transform(translate(0, -50%));
+          pointer-events: none;
+        }
+        select {
+          -moz-appearance: none;
+          -webkit-appearance: none;
+          appearance: none;
+        }
+        select::-ms-expand {
+          display: none;
+        }
+        select {
+          background: transparent;
+          outline: none;
+          color: $black;
+          cursor: pointer;
+        }
+        select:focus::-ms-value {
+          background-color: transparent;
+        }
+      }
+      .answer__wrapper label {
+        text-transform: none;
+        font-size: 18px;
+        font-weight: normal;
+        margin: 5px 0 0;
+        display: flex;
+        align-items: center;
+      }
+    }
+    .field-radio label input,
+    .field-checkbox label input {
+      margin: 0 15px 3px 0;
+    }
+  }
+}

@@ -1,0 +1,299 @@
+section.elementor-section.elementor-top-section.elementor-element.elementor-element-69918ac.elementor-section-full_width.elementor-section-height-min-height.elementor-section-height-default.elementor-section-items-middle{
+background:#0B572E!important;
+border-bottom: solid 5px #b87333;
+}
+section.elementor-section.elementor-top-section.elementor-element.elementor-element-69918ac.elementor-section-full_width.elementor-section-height-min-height.elementor-section-height-default.elementor-section-items-middle h4.elementor-heading-title.elementor-size-default {
+color: white;
+}
+section.elementor-section.elementor-top-section.elementor-element.elementor-element-69918ac.elementor-section-full_width.elementor-section-height-min-height.elementor-section-height-default.elementor-section-items-middle .elementor-column.elementor-col-20.elementor-top-column.elementor-element{
+border-right:solid 1px white;
+cursor:pointer;
+padding-top: 10px;
+}
+section.elementor-section.elementor-top-section.elementor-element.elementor-element-69918ac.elementor-section-full_width.elementor-section-height-min-height.elementor-section-height-default.elementor-section-items-middle .elementor-column.elementor-col-20.elementor-top-column.elementor-element:last-child{
+border-right:none;
+}
+section.elementor-section.elementor-top-section.elementor-element.elementor-element-69918ac.elementor-section-full_width.elementor-section-height-min-height.elementor-section-height-default.elementor-section-items-middle .elementor-column.elementor-col-20.elementor-top-column.elementor-element:hover{
+background:#062c17;
+}
+header.header .container{
+max-width:unset;
+}
+.header__logo, .header__nav{
+margin-left:10px;
+}
+.nav__item>ul{
+border-radius:unset;
+top: 52px;
+}
+.nav__item a, .nav__item a:after{
+font-weight:bold;
+}
+.nav__item{
+margin-right:50px;
+margin-bottom:0;
+}
+.custom-top-bar{
+display:flex;
+position: absolute;
+right: 30px;
+top: 5px;
+}
+.custom-top-bar *{
+color:white;
+margin:auto;
+}
+.custom-top-bar span{
+margin:0 10px;
+}
+.custom-top-bar .sub{
+
+}
+.w-dropdown-list ul.sub-menu{
+z-index: 100;
+position: absolute;
+background: #b3874c;
+width:100px;
+padding-left: 30px;
+padding-top: 10px;
+}
+.w-dropdown-list ul.sub-menu li{
+list-style-type: none;
+padding: 10x;
+}
+.w-dropdown-list{
+display:none;
+}
+.via_flex{
+display:flex;
+max-width:1200px;
+margin: auto;
+flex-wrap:wrap;
+}
+.vc_col-sm-3{
+width:25%;
+
+}
+.vc_col-sm-6{
+width:50%;
+}
+.vc_column-inner{
+padding: 0 20px;
+}
+.wpb_wrapper h4{
+text-transform: uppercase;
+font-size: 1.5rem;
+border-bottom: 2px solid #b87333;
+padding-bottom: 5px;
+font-weight: 700;
+display: inline-block;
+color: #b87333;
+}
+section.footer-top{
+position:relative;
+background:#062c17;
+padding-top:6rem;
+padding-bottom:6rem;
+border-top:solid 4px #b87333;
+background-image: url(https://coppermountaintech.bgsdev.com/wp-content/uploads/lines.png);
+background-position: bottom right;
+background-repeat: no-repeat;
+background-size: contain;
+}
+input[name=email]{
+background:white;
+height: 36px;
+margin-right: 5px;
+border-radius: 5px;
+padding: 5px;
+}
+#field1 input{
+border-radius: 5px;
+}
+.wpb_wrapper p{
+color:white;
+}
+.footer-top ul li:before {
+content: "\2794";
+margin-right: 5px;
+color: #b87333;
+}
+.footer-top ul li:hover a{
+color: #b87333;
+}
+element.style {
+}
+li {
+margin: 0 0 0.5rem;
+}
+* {
+box-sizing: border-box;
+}
+user agent stylesheet
+li {
+display: list-item;
+text-align: -webkit-match-parent;
+}
+.footer-top ul, .footer-bottom ul {
+list-style-type: none;
+}
+.footer-top li a{
+color:white;
+}
+#user-form-template-276 .form-row{
+display:flex;
+}
+.us_custom_1599d299{
+margin-top:20px;
+}
+.footer-bottom{
+background:#042312;
+color:white;
+}
+.footer-bottom ul li a{
+color:white;
+}
+.footer-bottom ul{
+display:flex;
+justify-content: center;
+}
+.footer-bottom ul li:not(:last-child)::after {
+content: "|";
+margin-left: 40px;
+display: inline-block;
+}
+
+.footer-bottom ul li:not(:last-child)::after {
+margin-right: 40px;
+}
+.elementor-16565 section{
+padding:unset;
+}
+.page{
+padding-bottom:unset;
+}
+.home-video .elementor-background-video-container{
+background-color:#F3EFEC;
+}
+.header{
+height:auto;
+}
+.header__wrap{
+height:60px
+}
+.main-header:after, .not-home-header:after{
+content:none;
+}
+.nav__search {
+right: 20px;
+top: 20%;
+}
+.header .menu{
+padding:0 14px;
+height:auto;
+top:60%;
+right:50px;
+}
+.menu-middle{
+top:8px;
+}
+.menu-bottom{
+top:16px;
+}
+.menu-global{
+border-top-width:3px;
+}
+.elementor-widget-slider_revolution.elementor-widget:not(:last-child) {
+margin-bottom: 0px;
+}
+#slider-1, #slider-2, #slider-3, #slider-4, #slider-5{
+display:none;
+opacity:0;
+transition: all 2s linear;
+}
+.main-header, .not-home-header {
+background: #0B572E;
+}
+.latest-news-container {
+background-color: #B87333;
+}
+.latest-news-container label {
+color: #B87333!important;
+}
+
+.latest-news-container label {
+background: #fff;
+font-weight:700;
+}
+.latest-news-container label:nth-child(2):after, .latest-news-container label:nth-child(4):after {
+border-left-color: #B87333;
+}
+.latest-news-container label:nth-child(2), .latest-news-container label:nth-child(4) {
+background: #B87333;
+}
+.latest-news-container label:after {
+border-left-color: #fff;
+}
+.item-bordered {
+background-color: #B87333;
+}
+.page {
+min-height: unset!important;
+}
+:not(header) a {
+color: #B87333;
+text-decoration: inherit;
+}
+
+body:before {
+content: '';
+background-image: url(https://coppermountaintech.com/wp-content/themes/cmt/assets/img/site-background.jpg);
+background-size: cover;
+background-repeat: no-repeat;
+background-position: center;
+position: fixed;
+left: 0;
+right: 0;
+top: 0;
+bottom: 0;
+z-index: -1;
+}
+@media screen and (max-width:500px){
+.vc_col-sm-3, .vc_col-sm-6{
+width:100%;
+}
+.footer ul>li>a{
+color:#fff;
+}
+.footer-bottom ul li:not(:last-child)::after{
+content:none;
+}
+.website-logo{
+height:40px;
+}
+.mb-hide{
+display:none !important;
+}
+.header__nav {
+margin-left: 0px;
+}
+.custom-top-bar span {
+margin: 0 3px;
+}
+}
+@media screen and (min-width:778px){
+.desktop-slider {
+display:block;
+}
+.mobile-slider {
+display:none;
+}
+}
+@media screen and (max-width:777px){
+.desktop-slider {
+display:none;
+}
+.mobile-slider {
+display:block;
+}
+}

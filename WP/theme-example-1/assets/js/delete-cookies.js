@@ -1,0 +1,1 @@
+var delete_cookie=function(e){document.cookie=e+"=;expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/"},mouse_leave=!1,language_click=!1;$(document).mouseleave(function(){mouse_leave=!0}),window.addEventListener("beforeunload",function(e){language_click||delete_cookie("firsttime")}),$(document).ready(function(){$(".languages-selector").click(function(){language_click=!0})});

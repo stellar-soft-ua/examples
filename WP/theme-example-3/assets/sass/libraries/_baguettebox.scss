@@ -1,0 +1,74 @@
+// Baguette Box Changes
+@import '~baguettebox.js/src/baguetteBox.scss';
+
+#baguetteBox-overlay {
+  .full-image {
+    background: $white;
+    vertical-align: middle;
+    padding: 100px 125px;
+
+    img {
+      box-shadow: none;
+    }
+    figcaption {
+      font-size: 16px;
+      line-height: 20px;
+      color: $white;
+      padding: 15px 25px;
+      margin: 0 -125px;
+    }
+  }
+  .baguetteBox-button {
+    background-color: transparent;
+    width: 30px;
+    height: 34px;
+    background-position: 0 center;
+    background-repeat: no-repeat;
+    border-radius: 0;
+    transition: background 0.3s $cubic-bezier;
+
+    svg {
+      display: none;
+    }
+  }
+  .baguetteBox-button:hover,
+  .baguetteBox-button:focus {
+    background-color: transparent;
+  }
+  .baguetteBox-button#close-button {
+    top: 50px;
+    right: 50px;
+    height: 24px;
+    width: 24px;
+    background-image: url(asset('images/icons/icon-x-black.svg'));
+    background-size: contain;
+    transition: transform 0.3s $cubic-bezier;
+
+    &:hover {
+      transform: rotate(90deg);
+    }
+  }
+  .baguetteBox-button#previous-button {
+    background-image: url(asset('images/icons/icon-chevron-left-black.svg'));
+    background-size: contain;
+    left: 50px;
+    background-position: 10px center;
+
+    &:hover {
+      background-position: 0px 0;
+    }
+  }
+  .baguetteBox-button#next-button {
+    background-image: url(asset('images/icons/icon-chevron-right-black.svg'));
+    background-size: contain;
+    right: 50px;
+
+    &:hover {
+      background-position: 10px 0;
+    }
+  }
+  .baguetteBox-button#next-button,
+  .baguetteBox-button#previous-button {
+    top: calc(50% - 17px);
+  }
+}

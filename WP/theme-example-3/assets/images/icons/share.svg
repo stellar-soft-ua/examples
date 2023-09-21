@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="45px" height="45px" viewBox="0 0 45 45" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>share round small</title>
+    <desc>Created with Sketch.</desc>
+    <g id="share-round-small" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(13.000000, 13.500000)" id="Group-2">
+            <g transform="translate(0.000000, 0.500000)">
+                <g id="Group" transform="translate(0.000000, 1.500000)">
+                    <circle id="Oval" fill="#373737" cx="1.78947368" cy="6.78947368" r="1.78947368"></circle>
+                    <polyline id="Shape" stroke="#373737" transform="translate(8.947300, 6.710526) rotate(90.000000) translate(-8.947300, -6.710526) " points="2.23677397 8.8817842e-16 8.94730028 13.4210526 15.6578266 8.39837099e-16"></polyline>
+                </g>
+                <circle id="Oval-Copy-2" fill="#373737" cx="15.2105263" cy="14.5394737" r="1.78947368"></circle>
+                <circle id="Oval-Copy-3" fill="#373737" cx="15.2105263" cy="1.78947368" r="1.78947368"></circle>
+            </g>
+        </g>
+        <rect id="Rectangle-2" stroke="#373737" stroke-width="0.5" x="0.25" y="0.25" width="44.5" height="44.5" rx="22.25"></rect>
+    </g>
+</svg>
