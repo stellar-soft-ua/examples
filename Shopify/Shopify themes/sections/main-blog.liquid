@@ -1,0 +1,194 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<script type='application/json' data-section="blogs">  
+  {
+    "blogs": [
+      {% paginate blog.articles by 9999 %}
+        {%- for article in blog.articles -%} 
+          {
+          {% if article.metafields.custom.read_time %} 
+            "metafields": "{{ article.metafields.custom.read_time }}",
+          {% endif %}
+            "url": "{{ article.url }}",
+            "created_at": "{{ article.created_at }}",
+            "tags": {{ article.tags | json }},
+            "summary_html": {{ article.excerpt | json }},
+            "image": {
+              "src": {{ article.image.src | json }}
+            },
+            "title": {{ article.title | json }},
+            "id": {{ article.id }}
+          }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      {% endpaginate %}
+    ],
+    "read_more_article": "{{ 'blogs.article.read_more' | t }}",
+    "pagination_index": {{ section.settings.count_pagination | json }}
+  }
+</script>
+
+<div class="blog__breadcrumbs">
+  <div class="page-width">
+  {% render 'breadcrumbs' %}
+  </div>
+</div>
+
+<div class="main-blog custom-main-blog page-width section-{{ section.id }}-padding">
+  <div class="custom-blog">
+    <h1 class="custom-blog__title">
+      {{ blog.title | escape }}
+    </h1>
+    <div class="custom-blog__post-banner-wrap">
+      {% for block in section.blocks %}
+        <a href="{{ block.settings.blog_post.url }}" style="background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.70) 100%), url('{{ block.settings.blog_post.image.src | image_url: width: 720 }}'), lightgray 50% / cover no-repeat;" class="custom-blog__post-banner-box">
+          <div class="custom-blog__post-banner-info">
+              <div class="custom-blog__post-banner-info-create">
+                {{ block.settings.blog_post.created_at | date: "%d %b %Y" }}
+              </div>
+              {% for tag in block.settings.blog_post.tags limit: 1 %}
+                <div class="custom-blog__post-banner-info-tag">
+                  {{ tag }}
+                </div>
+              {% endfor %}
+          </div>
+          <div class="custom-blog__post-banner-title">
+            {{ block.settings.blog_post.title }}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+    <div class="custom-blog-grid__wrap">
+      <div data-article-card class="custom-blog-grid__articles">
+        {%- for article in blog.articles -%}
+          <div class="custom-blog-grid__articles-item">
+            {%- render 'custom-article-card', article: article -%}
+          </div>
+        {%- endfor -%}
+      </div>
+      <div class="custom-blog-grid__sidebar">
+        {% if blog.all_tags.size > 0 %}
+          <div class="blog-sidebar__categories__wrap blog-sidebar__item">
+            <div class="blog-sidebar__categories-title blog-sidebar__title">
+              {{ 'general.custom.blog_categories' | t }}
+            </div>
+            <ul class="blog-sidebar__categories-tags">
+              {% for tag in blog.all_tags %}
+                <li>
+                  <a href="{% if current_tags contains tag %}{{ blog.url }}{% else %}{{ blog.url }}/tagged/{{ tag | handle }}{% endif %}" class="blog-sidebar__categories-tags-item {% if current_tags contains tag %} blog-sidebar__categories-tags-item--active{% endif %}">
+                    {{ tag }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+        <div class="blog-sidebar__search__wrap blog-sidebar__item">
+          <div class="blog-sidebar__search-title blog-sidebar__title">
+            {{ 'general.custom.search' | t }}
+          </div>
+          <div class="blog-sidebar__search-form">
+            <form method="get" action="/search">
+              <div class="field">
+                <input type="hidden" name="type" value="article" />
+                <input placeholder="{{ 'general.custom.blog_search' | t }}" id="search-blog" class="search__input field__input" type="text" name="q" />
+                <label class="field__label" for="search-blog">{{ 'general.custom.blog_search' | t }}</label>
+
+                <button type="reset" class="reset__button field__button{% if search.terms == blank %} hidden{% endif %}" aria-label="{{ 'general.search.reset' | t }}">
+                  <svg class="icon icon-close" aria-hidden="true" focusable="false">
+                    <use xlink:href="#icon-reset">
+                  </svg>
+                </button>
+                <button class="search__button field__button" aria-label="{{ 'general.search.search' | t }}">
+                  <svg class="icon icon-search" aria-hidden="true" focusable="false">
+                    <use href="#icon-search">
+                  </svg>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="blog-sidebar__archive-wrap blog-sidebar__item">
+          <div class="blog-sidebar__archive-title blog-sidebar__title">
+            {{ 'general.custom.blog_archive' | t }}
+          </div>
+          <div class="blog-sidebar__archive-content">
+            <ul id="paginated-list" data-blog-archive class="blog-sidebar__archive-list">
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div data-pagination-container class="pagination__wrap">       
+    </div>
+  </div>
+</div>
+
+<script defer="defer" src="{{ 'blog-archive.js' | asset_url }}"></script>
+
+{% schema %}
+{
+  "name": "t:sections.main-blog.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "count_pagination",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "Number of articles per page",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+    "blocks": [
+    {
+        "type": "article",
+        "name": "article",
+        "settings": [
+            {
+                "type": "article",
+                "id": "blog_post",
+                "label": "Blog Posts to Show"
+            }
+        ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,200 @@
+{% if section.settings.product_upsell != blank %}
+    {% assign product_upsell = section.settings.product_upsell %}
+{% else %}
+    {% assign product_upsell = product %}
+{% endif %}
+
+{% if product.description and section.blocks.size > 0  %}
+
+    <script src="{{ 'product-tabs.js' | asset_url }}" defer="defer"></script>
+
+    <div class="product-tabs product-tabs--{{ section.id }}">
+        <div class="page-width">
+            <div class="tab-container">
+                <div class="tab-header">
+                    <div class="tab-header__items tab-header__items--mob">
+                        {% for block in section.blocks %}
+                            {% if block.type == "tab_meta" and block.settings.tab_title == 'Specifications' and product.metafields.custom.specifications != blank %}
+                                <div class="tab-header__item">{{ block.settings.tab_title }}</div>
+                            {% endif %}
+                            {% if block.type == "tab_meta" and block.settings.tab_title == 'In The Box' and product.metafields.custom.in_the_box != blank %}
+                                <div class="tab-header__item">{{ block.settings.tab_title }}</div>
+                            {% endif %}
+                            {% if block.type == "product_descr" and product.description %}
+                                <div class="tab-header__item">{{ 'general.custom.description' | t }}</div>
+                            {% endif %}
+                            {% if block.type == "judgeme_app" and block.settings.tab_title != blank %}
+                                <div data-app-title-{{ block.settings.title_for_app }} class="tab-header__item">{{ block.settings.tab_title }}</div>
+                            {% endif %}
+                        {% endfor %}
+                        <span class="tab-header__items-arrow">{% render 'icon-tab-arrow' %}</span>
+                    </div>
+                </div>
+
+                <div class="tab-content">
+                    <div class="tab-content__wrap">
+                        {% for block in section.blocks %}
+                            {% if block.type == "tab_meta" and block.settings.tab_title == 'Specifications' %}
+                                <div class="tab-content__text">
+                                  {{ product.metafields.custom.specifications }}
+                                </div>
+                            {% endif %}
+                            {% if block.type == "tab_meta" and block.settings.tab_title == 'In The Box' %}
+                                <div class="tab-content__text">
+                                  {{ product.metafields.custom.in_the_box }}
+                                </div>
+                            {% endif %}
+                            {% if block.type == "product_descr" and product.description %}
+                                <div class="tab-content__text">
+                                    {{ product.description }}
+                                </div>
+                            {% endif %}
+                            {% if block.type == "judgeme_app" and block.settings.tab_title != blank %}
+                                <div class="tab-content__text tab-content__text--{{ block.settings.title_for_app }}">
+                                    <div style='clear:both'></div>
+                                    <div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' data-id='{{ product.id }}'>
+                                        {{ product.metafields.judgeme.widget }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="tab-content__product">
+                        {% render 'card-product',
+                            card_product: product_upsell,
+                            show_vendor: false,
+                            show_rating: false,
+                            lazy_load: lazy_load,
+                            show_quick_add: section.settings.enable_quick_add,
+                            section_id: section.id,
+                            custom_text_btn: section.settings.custom_text_btn,
+                            widget_type: 'judgeme_preview_badge'
+                        %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .product-tabs--{{ section.id }} {
+            margin-top: {{ section.settings.padding_top_mob }}px;
+            margin-bottom: {{ section.settings.padding_bottom_mob }}px;
+        }
+
+        @media (min-width: 1024px) {
+            .product-tabs--{{ section.id }} {
+                margin-top: {{ section.settings.padding_top }}px;
+                margin-bottom: {{ section.settings.padding_bottom }}px;
+            }
+        }
+    </style>
+{% endif %}
+
+
+{% schema %}
+    {
+      "name": "Product Tabs",
+      "settings": [
+        {
+          "type": "header",
+          "content": "t:sections.all.padding.section_padding_heading"
+        },
+        {
+            "type": "product",
+            "id": "product_upsell",
+            "label": "Product upsell"
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_quick_add",
+            "default": false,
+            "label": "Show quick add upsell product"
+        },
+        {
+            "type": "text",
+            "id": "custom_text_btn",
+            "label": "Button text"
+        },
+        {
+          "type": "range",
+          "id": "padding_top_mob",
+          "min": 0,
+          "max": 200,
+          "step": 5,
+          "unit": "px",
+          "label": "Top padding Mobile",
+          "default": 70
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom_mob",
+          "min": 0,
+          "max": 200,
+          "step": 5,
+          "unit": "px",
+          "label": "Bottom padding Mobile",
+          "default": 125
+        },
+        {
+          "type": "range",
+          "id": "padding_top",
+          "min": 0,
+          "max": 200,
+          "step": 5,
+          "unit": "px",
+          "label": "t:sections.all.padding.padding_top",
+          "default": 80
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "min": 0,
+          "max": 200,
+          "step": 5,
+          "unit": "px",
+          "label": "t:sections.all.padding.padding_bottom",
+          "default": 100
+        }
+      ],
+      "blocks": [
+        {
+            "type": "tab_meta",
+            "name": "Tab metafield",
+            "settings": [
+                {
+                    "type":"inline_richtext",
+                    "id":"tab_title",
+                    "label":"Tab title"
+                }
+            ]
+        },
+        {
+            "type": "judgeme_app",
+            "name": "judgeme APP",
+            "settings": [
+                {
+                    "type":"inline_richtext",
+                    "id":"tab_title",
+                    "label":"Tab title"
+                },
+                {
+                    "type":"text",
+                    "id":"title_for_app",
+                    "label":"Title for app"
+                }
+            ]
+        },
+        {
+            "type": "product_descr",
+            "name": "Tab product description",
+            "limit": 1
+        }
+      ],
+      "presets": [
+        {
+          "name": "Product Tabs"
+        }
+      ]
+    }
+{% endschema %}
