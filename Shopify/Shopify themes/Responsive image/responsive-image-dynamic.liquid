@@ -1,0 +1,70 @@
+{% liquid
+  assign image = image
+  assign image_mobile = image_mobile
+
+  assign width = width | default: image.width
+  assign height = height | default: image.height
+
+  assign alt_text = alt_text | default: image.alt
+
+  assign aria_label = aria_label
+  assign fetchpriority = fetchpriority | default: "auto"
+  assign loading = loading
+  assign class = class | default: ""
+  assign container_minus_paddings = settings.page_width | minus: 32
+  assign container_plus_space = settings.page_width | plus: 32
+  assign default_sizes = "(max-width: SIMPLE_CONTAINERpx) calc(100vw - 32px), (min-width: CONTAINERpx) CONTAINERwPADDINGSpx, CONTAINERwPADDINGSpx" | replace: "SIMPLE_CONTAINER", settings.page_width | replace: "CONTAINERwPADDINGS", container_minus_paddings |  replace: "CONTAINER", container_plus_space
+  assign sizes = sizes | default: default_sizes
+
+  assign srcset = srcset | default: "320, 480, 576, 768, 992, 1024, 1220, 1440, 1680, 1920, 2000, 2180"
+  assign srcset_mobile = srcset_mobile | default: "320, 480, 576, 768"
+
+  assign srcset_array = srcset | split: ","
+  assign srcset_mobile_array = srcset_mobile | split: ","
+  assign srcset_string = ""
+  assign srcset_mobile_string = ""
+%}
+
+{% if image or image_mobile %}
+  {% for src_size in srcset_array %}
+    {%- assign clear_src_size = src_size | strip -%}
+    {%- assign src_size_number = clear_src_size | times: 1 -%}
+    {% if src_size_number <= image.width %}
+      {% unless forloop.first %}
+        {% assign srcset_string = srcset_string | append: ', ' %}
+      {% endunless %}
+      {%- assign imageURL = image | image_url: width: src_size -%}
+      {% assign wAttr = clear_src_size | append: 'w' %}
+      {% assign srcsetLine = imageURL | append: ' ' %}
+      {% assign srcsetLine = srcsetLine | append: wAttr %}
+      {% assign srcset_string = srcset_string | append: srcsetLine %}
+    {% endif %}
+  {% endfor %}
+
+  {% if image_mobile != blank  %}
+    {% for src_size in srcset_mobile_array %}
+      {%- assign clear_src_size = src_size | strip -%}
+      {%- assign src_size_number = clear_src_size | times: 1 -%}
+      {% if src_size_number <= image_mobile.width %}
+        {%- assign imageURL = image_mobile | image_url: width: clear_src_size -%}
+        {% assign wAttr = clear_src_size | append: 'w' %}
+        {% assign srcsetLine = imageURL | append: ' ' %}
+        {% assign srcsetLine = srcsetLine | append: wAttr %}
+        {% assign srcset_mobile_string = srcset_mobile_string | append: srcsetLine %}
+        {% unless forloop.last %}
+          {% assign srcset_mobile_string = srcset_mobile_string | append: ', ' %}
+        {% endunless %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+  {%- if image != blank and image_mobile != blank -%}
+    <picture>
+      <source media="(max-width: 768px)" srcset="{{ srcset_mobile_string }}" sizes="{{sizes}}" />
+      <source media="(min-width: 769px)" srcset="{{ srcset_string }}" sizes="{{sizes}}" />
+      {{ image | image_url: width: width | image_tag: class: class, alt: alt_text, aria-label: aria_label, fetchpriority: fetchpriority, loading: loading, srcset: srcset_string, sizes: sizes }}
+    </picture>
+  {%- else -%}
+    {{ image | image_url: width: width | image_tag: class: class, alt: alt_text, aria-label: aria_label, fetchpriority: fetchpriority, loading: loading, srcset: srcset_string, sizes: sizes }}
+  {% endif %} 
+{% endif %} 
