@@ -1,0 +1,206 @@
+<?php
+
+use Amasty\MWishlist\Block\Account\Wishlist\Title;
+use Hyva\Theme\Model\ViewModelRegistry;
+use AL\AmastyMultipleWishlist\ViewModel\ExtractAvailableSocialMedia;
+use Magento\Framework\Escaper;
+
+/**
+ * @var Title $block
+ * @var ViewModelRegistry $viewModels
+ * @var Escaper $escaper
+ */
+$socialMediaExtractor = $viewModels->require(ExtractAvailableSocialMedia::class);
+?>
+
+<section x-data="initWishListHeaderInformation()"
+         @amasty-new-wishlist-name-validation-error.window="hasValidationErrors=$event.detail.hasWishlistNameValidationError"
+         @private-content-loaded.window="extractWishListsData($event.detail.data.mwishlist)"
+         @amasty-response-delete-wish-list.window="if ($event.detail.isSuccess) window.location.href = '<?= $block->getUrl('mwishlist/index/index') ?>'"
+         class="amwishlist-page-title">
+    <?= /** @noEscape */ $block->getBlockHtml('formkey') ?>
+    <button class="amwishlist-button -clear -prev"
+            @click="window.location.href = '<?= $block->getUrl('mwishlist/index/index') ?>'"
+            type="button">
+        <?= $escaper->escapeHtml(__('Back')) ?>
+    </button>
+    <div class="amwishlist-title-block">
+        <div class="amwishlist-field-block -editable -title"
+             @mouseover="showEditButton = true"
+             @mouseover.away="showEditButton = false"
+             @click.outside="isEditNameActive = false, showEditButton = true, showSaveButton = false, wishListTitle = originWishListTitle"
+             @click="isEditNameActive = true, showEditButton = false, showSaveButton = true"
+             :class="{
+                '-active': isEditNameActive,
+                '-error': hasValidationErrors
+             }">
+            <div class="amwishlist-field">
+                <input class="amwishlist-input -clear w-full"
+                       x-model="wishListTitle"
+                       name="wishlist[name]"
+                       @click="isEditNameActive = true"
+                       type="text">
+                <button class="amwishlist-button -clear -remove"
+                        x-show="isEditNameActive"
+                        @click="wishListTitle = null"
+                        type="button">
+                </button>
+            </div>
+            <button class="amwishlist-button -primary -fill -save"
+                    :class="{
+                        '-disabled': wishListTitle === null || hasValidationErrors
+                    }"
+                    x-show="showSaveButton"
+                    x-cloak
+                    name="do"
+                    type="submit">
+                <?= $escaper->escapeHtml(__('Save')) ?>
+            </button>
+            <button class="amwishlist-button -clear -edit"
+                    type="button"
+                    x-show="showEditButton && !isEditNameActive">
+            </button>
+        </div>
+        <ul class="amwishlist-messages-list" data-bind="foreach: errors, visible: errors().length">
+            <li class="amwishlist-item" html="$data"></li>
+        </ul>
+        <div class="amwishlist-toolbar" data-bind="css: { '-deletable': !isDeleteable() }">
+            <button class="amwishlist-button -clear -update"
+                    name="do"
+                    type="submit">
+                <?= $escaper->escapeHtml(__('Update List')) ?>
+            </button>
+
+            <button class="amwishlist-button -clear -share"
+                    name="save_and_share"
+                    x-show="!socialMediaList.length"
+                    x-cloak>
+                <?= $escaper->escapeHtml(__('Share List')) ?>
+            </button>
+
+            <template x-if="socialMediaList.length">
+                <div class="amwishlist-sharesocials-container" data-amwishlist-js="socials">
+                    <div class="amwishlist-sharesocials-dropdown"
+                         :class="{'-opened': showShareSocials}">
+                        <button class="amwishlist-button amwishlist-social -clear -mail"
+                                name="save_and_share"
+                                title="<?= $escaper->escapeHtmlAttr(__('Via Mail')) ?>"
+                                type="submit">
+                        </button>
+                        <template x-for="socialMediaName in socialMediaList">
+                            <a class="amwishlist-social"
+                               target="popup"
+                               x-show="getSocialMediaData(socialMediaName)"
+                               :class="`-` + socialMediaName"
+                               :title="hyva.str('<?= $escaper->escapeJs(__("Via %1")) ?>', socialMediaName)"
+                               :href="getSocialMediaData(socialMediaName) ?? ''"
+                               x-cloak>
+                            </a>
+                        </template>
+                    </div>
+                    <button class="amwishlist-button -clear -share"
+                            type="button"
+                            @click="showShareSocials = ! showShareSocials">
+                        <?= $escaper->escapeHtml(__('Share List')) ?>
+                    </button>
+                </div>
+            </template>
+            <template x-if="!getJsLayoutData('components.ampagetitle.config.defaultWishlist')">
+                <button class="amwishlist-button -clear -basket"
+                        data-bind="i18n: 'Delete List', attr: { 'data-mwishlist-ajax': deleteAjaxParam }"
+                        :data-mwishlist-ajax="getJsLayoutData('components.ampagetitle.config.deleteAjaxParam')"
+                        @click.prevent="$dispatch('open-amasty-wishlist-popup', {
+                            actionEventData: {
+                                event: 'delete',
+                                wishlistId: wishListId,
+                                element: $el
+                            }
+                        })"
+                        data-mwishlist-delete
+                        name="save_and_share"
+                        type="button">
+                    <?= $escaper->escapeHtml(__('Delete List')) ?>
+                </button>
+            </template>
+        </div>
+        <span class="amwishlist-counter"
+              x-text="hyva.str('<?= $escaper->escapeJs(__('%1 items')) ?>', getWishlistItemCount())"></span>
+        <aside class="amwishlist-overlay-block"
+               data-bind="css: {
+                        '-active': isEditNameActive()
+                  },
+                  event: {
+                     click: function () {
+                        clickOverlay();
+                     }
+                  }">
+        </aside>
+    </div>
+
+    <div class="hidden amwishlist-types-checker" data-bind="foreach: types">
+        <label class="amwishlist-label">
+            <input class="amwishlist-input"
+                   type="radio"
+                   name="wishlist[type]"
+                   data-bind="attr: { checked: $index() == $parent.selectedType }, value: $index"
+            >
+            <span data-bind="i18n: $data"></span>
+        </label>
+    </div>
+</section>
+<script>
+    function initWishListHeaderInformation() {
+        return {
+            wishListsData: null,
+            wishListId: '<?= $block->getRequest()->getParam('wishlist_id') ?>',
+            currentWishList: {},
+            wishListTitle: null,
+            originWishListTitle: null,
+            showClearButton: false,
+            showSaveButton: false,
+            showEditButton: false,
+            isEditNameActive: false,
+            hasValidationErrors: false,
+            jsLayout: JSON.parse('<?= $escaper->escapeJs($block->getJsLayout()) ?>'),
+            socialMediaList: JSON.parse('<?= $socialMediaExtractor->getActiveSocialMedia() ?>'),
+            showShareSocials: false,
+            init: function () {
+                let validateName;
+                this.$watch('wishListTitle', (value, oldValue) => {
+                    if (value && value !== oldValue && oldValue !== null) {
+                        clearInterval(validateName);
+
+                        validateName = setTimeout(() => {
+                            this.$dispatch('amasty-validate-wishlist-name', {wishlistName: value});
+                        }, 1000);
+                    }
+                });
+            },
+            getSocialMediaData: function (socialMediaName) {
+                return _.get(this.jsLayout, 'components.ampagetitle.config.' + socialMediaName, false);
+            },
+            getJsLayoutData: function (path) {
+                return _.get(this.jsLayout, path);
+            },
+            extractWishListsData: function (wishListData) {
+                this.wishListsData = wishListData ?? [];
+                this.getWishListData();
+            },
+            getWishListData: function () {
+                this.wishListsData.wishlist_list[0].forEach(wishList => {
+                    if (wishList.wishlist_id == this.wishListId) {
+                        this.currentWishList = wishList;
+                        this.wishListTitle = wishList.name;
+                        this.originWishListTitle = this.wishListTitle;
+                        this.$dispatch('amasty-current-wislist-data', {currentWishListData: wishList});
+
+                        return;
+                    }
+                })
+            },
+            getWishlistItemCount: function () {
+                return this.currentWishList.hasOwnProperty('items_count') ? this.currentWishList.items_count : 0;
+            }
+        }
+    }
+</script>

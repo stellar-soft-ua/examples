@@ -1,0 +1,68 @@
+<?php
+
+use Magento\Framework\Escaper;
+use Amasty\MWishlist\Block\Account\Wishlist\Item\Column\Cart;
+use Magento\Wishlist\Model\Item;
+use Magento\Wishlist\ViewModel\AllowedQuantity;
+
+/**
+ * @var Escaper $escaper
+ * @var Cart $block
+ * @var Item $item
+ * @var AllowedQuantity $viewModel
+ */
+
+$item = $block->getItem();
+$product = $item->getProduct();
+$viewModel = $block->getData('allowedQuantityViewModel');
+$allowedQty = $viewModel->setItem($item)->getMinMaxQty();
+?>
+
+<?php foreach ($block->getChildNames() as $childName): ?>
+    <?= /* @noEscape */ $block->getLayout()->renderElement($childName, false) ?>
+<?php endforeach;?>
+<?php if ($item->canHaveQty() && $product->isVisibleInSiteVisibility()): ?>
+    <div class="amwishlist-field -qty">
+        <label class="amwishlist-label" for="qty[<?= $escaper->escapeHtmlAttr($item->getId()) ?>]">
+            <?= $escaper->escapeHtml(__('Qty')) ?>
+        </label>
+        <input id="amastyMwishlistAddToCartItem_qty[<?= $escaper->escapeHtmlAttr($item->getId()) ?>]"
+               class="amwishlist-input -qty"
+               data-validate="{
+                    'required-number':true,'validate-greater-than-zero':true,
+                    'validate-item-quantity':{
+                        'minAllowed':<?= /* @noEscape */ $allowedQty['minAllowed'] ?>,
+                        'maxAllowed':<?= /* @noEscape */ $allowedQty['maxAllowed'] ?>
+                    }
+               }"
+               type="number"
+               data-role="qty"
+               data-product-id="<?= $escaper->escapeHtmlAttr($item->getId()) ?>"
+               data-initial-qty="<?= /* @noEscape */ $block->getAddToCartQty($item) * 1 ?>"
+               name="qty[<?= $escaper->escapeHtmlAttr($item->getId()) ?>]"
+               x-model="productQtyList[<?= $escaper->escapeHtmlAttr($item->getId()) ?>]"
+               data-amwishlist-js="item-qty"
+               <?= /* @noEscape */ $product->isSaleable() ? '' : 'disabled="disabled"' ?> />
+    </div>
+<?php endif; ?>
+<?php if ($product->isSaleable()): ?>
+    <button class="amwishlist-button -fill -primary -tocart action tocart"
+            @click.prevent="$dispatch('amasty-add-wishlist-single-item-to-cart', {element: $el})"
+            type="button"
+            data-role="tocart"
+            <?= /** @noEscape */ $block->getPostAttribute() ?>='<?= /* @noEscape */ $block->getItemAddCartParams($item) ?>'
+            title="<?= $escaper->escapeHtmlAttr(__('Add to Cart')) ?>"
+            data-item-id="<?= $escaper->escapeHtmlAttr($item->getId()) ?>">
+        <?= $escaper->escapeHtml(__('Add to Cart')) ?>
+    </button>
+<?php else: ?>
+    <?php if ($product->getIsSalable()): ?>
+        <p class="available stock" title="<?= $escaper->escapeHtmlAttr(__('Availability')) ?>">
+            <span><?= $escaper->escapeHtml(__('In stock')) ?></span>
+        </p>
+    <?php else: ?>
+        <p class="unavailable stock" title="<?= $escaper->escapeHtmlAttr(__('Availability')) ?>">
+            <span><?= $escaper->escapeHtml(__('Out of stock')) ?></span>
+        </p>
+    <?php endif; ?>
+<?php endif; ?>

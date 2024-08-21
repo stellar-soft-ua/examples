@@ -1,0 +1,60 @@
+<?php
+
+use Magento\Framework\Escaper;
+use Amasty\MWishlist\Block\Account\Wishlist\MassActions;
+
+/**
+ * @var Escaper $escaper
+ * @var MassActions $block
+ */
+?>
+<div x-data="initWishListMassActions()"
+     @amasty-share-selected-item-ids.window="handleSelectedItemData($event.detail.selectedItemIds)"
+    class="amwishlist-toolbar-block -mass-action">
+    <button class="amwishlist-button -clear -link"
+            type="button"
+            @click.prevent="$dispatch('amasty-select-unselect-all-items', {selectUnselectAllItems: Date.now()})"
+            x-text="hasSelectedItems ? unselectAllButtonText : selectAllButtonText"
+            data-amwishlist-js="select-all">
+    </button>
+    <button class="amwishlist-button -empty"
+            :class="{'-disabled': !hasSelectedItems}"
+            @click.prevent="$dispatch('amasty-is-copy-selected-items', {copyData: {copyItemData: copyItemData, isCopySelectedItems: true}})"
+            x-cloak
+            type="button" data-amwishlist-js="copy"
+            data-mwishlist-ajax='<?= /* @noEscape */ $block->getCopyData() ?>'>
+        <?= $escaper->escapeHtml(__('Copy Selected')) ?>
+    </button>
+    <button class="amwishlist-button -empty"
+            :class="{'-disabled': !hasSelectedItems}"
+            @click.prevent="$dispatch('amasty-is-move-selected-items', {moveData: {moveItemData: moveItemData, isMoveSelectedItems: true}})"
+            x-cloak
+            type="button" data-amwishlist-js="move"
+            data-mwishlist-ajax='<?= /* @noEscape */ $block->getMoveData() ?>'>
+        <?= $escaper->escapeHtml(__('Move Selected')) ?>
+    </button>
+    <button class="amwishlist-button -fill -primary -addtolist"
+            @click.prevent="$dispatch('amasty-add-wishlist-to-cart', {wishListId: getWishListId($el)})"
+            type="button"
+            data-post='<?= /** @noEscape */ $block->getAddToCartData() ?>'>
+        <?= $escaper->escapeHtml(__('Add All to Cart')) ?>
+    </button>
+</div>
+<script>
+    function initWishListMassActions() {
+        return {
+            copyItemData: JSON.parse('<?= $escaper->escapeJs($block->getCopyData()) ?>'),
+            moveItemData: JSON.parse('<?= $escaper->escapeJs($block->getMoveData()) ?>'),
+            hasSelectedItems: false,
+            selectAllButtonText: '<?= $escaper->escapeHtml(__('Select All')) ?>',
+            unselectAllButtonText: '<?= $escaper->escapeHtml(__('Unselect All')) ?>',
+            selectAllButtonStatus: null,
+            handleSelectedItemData: function (data) {
+                this.hasSelectedItems = data.length;
+            },
+            getWishListId: function (element) {
+                return _.get(JSON.parse(element.dataset.post), 'data.wishlist_id');
+            }
+        }
+    }
+</script>

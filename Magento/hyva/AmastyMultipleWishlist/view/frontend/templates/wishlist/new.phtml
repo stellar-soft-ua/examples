@@ -1,0 +1,58 @@
+<?php
+
+use Magento\Framework\Escaper;
+use Amasty\MWishlist\Block\Account\Wishlist\NewWishlist;
+
+/**
+ * @var Escaper $escaper
+ * @var NewWishlist $block
+ */
+?>
+
+<div x-data="initNewWishlistCustomerAccount()"
+     @amasty-new-wishlist-name-validation-error.window="hasWishlistNameValidationError=$event.detail.hasWishlistNameValidationError;wishlistNameValidationErrorMessage=$event.detail.wishlistNameValidationErrorMessage"
+     class="amwishlist-newlist-block"
+     data-mage-init='{ "collapsible":{} }'
+     data-amwishlist-js="new-block">
+    <button class="amwishlist-button -link -clear -plus"
+            @click="showAddNewList = ! showAddNewList"
+            data-role="title"
+            data-amwishlist-js="newlist-button"
+            type="button">
+        <?= $escaper->escapeHtml(__('Create New List')) ?>
+    </button>
+
+    <div x-show="showAddNewList" class="amwishlist-newlist" data-role="content">
+        <form class="amwishlist-form"
+              data-amwishlist-js="newlist-form"
+              data-mage-init='{"validation": {}}'
+              data-mwishlist-ajax='<?= $escaper->escapeHtml($block->getPostData()) ?>'>
+            <input class="amwishlist-input"
+                   name="wishlist[name]"
+                   type="text"
+                   title="<?= $escaper->escapeHtml(__('Name List')) ?>"
+                   x-model="newListNameCustomerAccount"
+                   data-validate='{"validate-no-empty":true, "remote":"<?= $escaper->escapeHtml($block->getValidateWishlistAction()) ?>"}'>
+            <button class="amwishlist-button -fill -primary -add"
+                    @click.prevent="$dispatch('add-new-list-customer-account', {newListNameCustomerAccount: newListNameCustomerAccount})"
+                    type="submit">
+                <?= $escaper->escapeHtml(__('Add')) ?>
+            </button>
+        </form>
+        <ul class="amwishlist-messages-list"
+            x-show="hasWishlistNameValidationError">
+            <li class="amwishlist-item"
+                x-text="wishlistNameValidationErrorMessage"></li>
+        </ul>
+    </div>
+</div>
+<script>
+    function initNewWishlistCustomerAccount() {
+        return {
+            showAddNewList: false,
+            newListNameCustomerAccount: null,
+            hasWishlistNameValidationError: false,
+            wishlistNameValidationErrorMessage: null
+        }
+    }
+</script>

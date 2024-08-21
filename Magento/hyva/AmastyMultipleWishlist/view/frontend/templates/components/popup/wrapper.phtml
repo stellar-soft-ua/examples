@@ -1,0 +1,51 @@
+<?php
+
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Element\Template;
+
+/**
+ * @var Escaper $escaper
+ * @var Template $block
+ */
+?>
+<div class="amwishlist-popup"
+     @click.outside="closePopup()">
+    <div class="amwishlist-toolbar -header">
+        <button class="amwishlist-button -close -clear"
+                @click.prevent="closePopup()">
+        </button>
+    </div>
+    <div class="amwishlist-title">
+        <h5 class="amwishlist-header" x-show="popupType !== 'delete'">
+            <?= $escaper->escapeHtml(__('Choose the list for selected product')) ?>
+        </h5>
+        <p class="amwishlist-desc" data-bind="visible: description, html: description"></p>
+    </div>
+    <div class="amwishlist-content">
+        <template x-if="popupType !== 'delete'">
+            <?= $block->getChildHtml('amwishlist.popup.wrapper.wishlist'); ?>
+        </template>
+        <template x-if="popupType === 'delete'">
+            <div>
+                <?= $escaper->escapeHtml(__('Are you sure? This action can\'t be undone.')) ?>
+            </div>
+        </template>
+    </div>
+    <div class="amwishlist-toolbar -footer" data-bind="foreach: buttons, visible: buttons" x-show="popupType !== 'delete'" x-cloak>
+        <button class="-fill -primary -addtolist amwishlist-button"
+                :class="!activeWishListId ? '-disabled' : ''"
+                @click="executeWishListEvent()"
+                x-text="popupButtonLabel">
+        </button>
+    </div>
+    <div class="amwishlist-toolbar -footer" data-bind="foreach: buttons, visible: buttons" x-show="popupType === 'delete'" x-cloak>
+        <button class="-fill -primary -addtolist amwishlist-button"
+                @click="closePopup()">
+            <?= $escaper->escapeHtml(__('Cancel')) ?>
+        </button>
+        <button class="-fill -primary -addtolist amwishlist-button"
+                @click.prevent="$dispatch('amasty-delete-wish-list', {element: elementStorage})"
+                x-text="popupButtonLabel">
+        </button>
+    </div>
+</div>

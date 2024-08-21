@@ -1,0 +1,208 @@
+<?php
+
+use Magento\Framework\Escaper;
+use Amasty\MWishlist\Block\Account\Wishlist\Search;
+
+/**
+ * @var Escaper $escaper
+ * @var Search $block
+ */
+?>
+
+<section x-data="initWishlistSearchProduct()"
+         @amasty-current-wislist-data.window="currentWishListData=$event.detail.currentWishListData"
+         class="amwishlist-search-block"
+         data-bind="scope:'search', mageInit: {
+            'Magento_Ui/js/core/app': <?= $escaper->escapeHtml($block->getJsLayout()) ?>
+         }">
+
+    <div class="amwishlist-search" data-amwishlist-js="search-wrapper">
+        <button class="amwishlist-button -clear -link -plus"
+                @click.prevent="isSearchActive = ! isSearchActive">
+            <?= $escaper->escapeHtml(__('Add New Products')) ?>
+        </button>
+        <div class="amwishlist-field"
+             x-show="isSearchActive"
+             :class="{'-active': searchValue}">
+            <input class="amwishlist-input -search"
+                   x-model="searchValue"
+                   placeholder="<?= $escaper->escapeHtml(__('Search by SKU or Product Name')) ?>"
+                   data-amwishlist-js="search-input"
+                   data-bind="event: { click: search, input: search }"
+            >
+            <button class="amwishlist-button -clear -search"
+                    @click.prevent="search()"
+                    type="button">
+            </button>
+            <button class="amwishlist-button -clear -remove"
+                    type="button"
+                    x-show="searchValue"
+                    @click.prevent="searchValue = null">
+            </button>
+        </div>
+        <ul class="amwishlist-message-block"
+            @click.outside="isEmpty = false"
+            x-show="isSearchActive && isEmpty">
+            <li class="amwishlist-item -empty">
+                <?= $escaper->escapeHtml(__('Your search returned no products.')) ?>
+            </li>
+        </ul>
+        <ul class="amwishlist-items-block"
+            @click.outside="showSearchResult = false"
+            data-amwishlist-js="items"
+            x-show="showSearchResult"
+            data-bind="foreach: elems(), visible: isSearchActive()">
+            <template x-for="item in foundItems">
+                <li class="amwishlist-item">
+                    <img class="amwishlist-image"
+                         data-amwishlist-js="image"
+                         alt="<?= $escaper->escapeHtml(__('Product Photo')) ?>"
+                         :src="item.image">
+                    <span x-text="item.name"
+                        class="amwishlist-name text-sm"
+                        data-amwishlist-js="name"></span>
+                    <div class="amwishlist-qty-block">
+                        <button
+                            @click="decrementQty(item.id)"
+                            class="amwishlist-button -clear -decr"
+                            type="button"></button>
+                        <input class="amwishlist-input"
+                               data-amwishlist-js="input"
+                               x-model="productQty[item.id]"
+                        >
+                        <button
+                            @click="productQty[item.id]++"
+                            class="amwishlist-button -clear -incr"
+                            type="button"></button>
+                    </div>
+                    <span class="amwishlist-sku">
+                        <b>
+                            <?= $escaper->escapeHtml(__('SKU')) ?>
+                        </b>
+                        <span>: </span>
+                        <span x-text="item.sku"
+                            class="amwishlist-text"
+                            data-amwishlist-js="sku"></span>
+                    </span>
+                    <span x-html="item.price"
+                        class="amwishlist-price"
+                        data-amwishlist-js="price"></span>
+                    <button class="amwishlist-button -empty"
+                            @click="addToWishList(item.id)"
+                            type="button"
+                            data-amwishlist-js="add"
+                            title="<?= $escaper->escapeHtml(__('Add current product')) ?>">
+                        <?= $escaper->escapeHtml(__('Add')) ?>
+                    </button>
+                </li>
+            </template>
+
+        </ul>
+    </div>
+
+    <div class="amwishlist-overlay-block"
+         data-bind="visible: elems().length || isEmpty(), click: function (){ elems([]); isEmpty(false) }">
+    </div>
+
+</section>
+<script>
+    function initWishlistSearchProduct() {
+        return {
+            currentWishListData: null,
+            isSearchActive: false,
+            showSearchResult: false,
+            searchValue: null,
+            isEmpty: false,
+            searchUrl: '<?= $escaper->escapeUrl($block->getUrl('mwishlist/product/search')) ?>',
+            foundItems: [],
+            productQty: [],
+            init: function () {
+                let triggerSearch;
+                this.$watch('searchValue', (value, oldValue) => {
+                    if (value && value !== oldValue) {
+                        clearInterval(triggerSearch);
+
+                        triggerSearch = setTimeout(() => {
+                            this.search();
+                        }, 1000);
+                    }
+                });
+            },
+            search: function () {
+                const url = new URL('<?= $escaper->escapeUrl($block->getUrl('mwishlist/product/search')) ?>');
+                url.searchParams.set('q', this.searchValue);
+                url.searchParams.set('_', Date.now());
+                fetch(
+                    url,
+                    {
+                        method: 'GET'
+                    }
+                ).then(response => {
+                    if (!response.ok) {
+                        throw new Error('Response issues');
+                    }
+
+                    return response.json();
+                }).then(data => {
+                    this.showSearchResult = true;
+                    this.extractSearchResult(data);
+                    this.$dispatch('reload-customer-section-data');
+                }).catch(error => {
+                    console.error('Error adding item to wishlist: ' + error);
+                });
+            },
+            extractSearchResult: function (data) {
+                this.isEmpty = data.hasOwnProperty('items') && !data.items.length;
+
+                if (!this.isEmpty) {
+                    this.foundItems = data.items;
+                    this.foundItems.forEach(item => {
+                        this.productQty[item.id] = 1;
+                    });
+                }
+            },
+            decrementQty: function(itemId) {
+                if (this.productQty[itemId] > 1) {
+                    this.productQty[itemId]--;
+                }
+            },
+            addToWishList: function (itemId) {
+                const payload = {
+                    product: itemId,
+                    form_key: hyva.getFormKey(),
+                    qty: this.productQty[itemId],
+                    block: 'customer.wishlist',
+                    wishlist_id: this.currentWishListData.wishlist_id,
+                    component: 'itemsQty'
+                };
+                fetch('<?= $escaper->escapeUrl($block->getUrl('mwishlist/item/add')) ?>', {
+                    method: 'POST',
+                    body: this.buildFormData(payload)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response issues');
+                        }
+
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.hasOwnProperty('item')) {
+                            this.$dispatch('amasty-added-new-item-to-list', {item: data.item});
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error adding item to wishlist:', error);
+                    });
+            },
+            buildFormData: function (object) {
+                const formData = new FormData();
+                Object.entries(object).forEach(([key, value]) => {
+                    formData.append(key, value);
+                });
+
+                return formData;
+            },
+        }
+    }
+</script>

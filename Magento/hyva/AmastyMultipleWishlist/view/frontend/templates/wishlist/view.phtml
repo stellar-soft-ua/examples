@@ -1,0 +1,277 @@
+<?php
+
+use Magento\Framework\Escaper;
+use Amasty\MWishlist\Block\Account\Wishlist\Wishlist;
+
+/**
+ * @var Escaper $escaper
+ * @var Wishlist $block
+ */
+?>
+
+<?php if ($block->getHelperContext()->getWishlistHelper()->isAllow()): ?>
+    <?php
+    $block->getChildBlock('items')->setItems($block->getWishlistItems());
+    $columns = $block->getChildBlock('items')->getColumns();
+    $columnBlockNames = [];
+
+    foreach ($columns as $column) {
+        $columnBlockNames[] = $column->getNameInLayout();
+    }
+    ?>
+    <?= ($block->getChildHtml('wishlist.rss.link')) ?>
+    <form class="form-wishlist-items" id="wishlist-view-form"
+          action="<?= $escaper->escapeUrl($block->getUpdateUrl()) ?>"
+          method="post">
+        <?= $block->getBlockHtml('formkey') ?>
+        <?= $block->getChildHtml('customer.mwishlist.title'); ?>
+        <?= $block->getChildHtml('customer.mwishlist.search.product'); ?>
+        <div data-amwishlist-js="items-block"
+             x-data="wishListItemList()"
+             @amasty-select-unselect-all-items.window="selectUnselectAllItems=$event.detail.selectUnselectAllItems"
+             @amasty-is-copy-selected-items.window="extractCopyData($event.detail.copyData)"
+             @amasty-is-move-selected-items.window="extractMoveData($event.detail.moveData)"
+             @amasty-current-wislist-data.window="currentWishListData=$event.detail.currentWishListData"
+             @amasty-reset-copy-move-single-action.window="isSingleAction=$event.detail.isSingleAction"
+             @amasty-delete-items-by-id.window="deleteMigratedItemsFromList()"
+             @amasty-added-new-item-to-list.window="addNewItemToWishlist($event.detail.item)">
+            <template x-if="wishlistItems.length">
+                <div>
+                    <?= $block->getChildHtml('mass_actions') ?>
+                    <?= $block->getChildHtml('items') ?>
+                </div>
+            </template>
+            <template x-if="!wishlistItems.length">
+                <div class="message info empty"><span><?= $escaper->escapeHtml(__('You have no items in your wish list.')) ?></span></div>
+            </template>
+        </div>
+        <?= $block->getChildHtml('bottom') ?>
+    </form>
+    <div class="toolbar wishlist-toolbar" data-amwishlist-js="pager"><br><?= $block->getChildHtml('wishlist_item_pager'); ?></div>
+    <script>
+        function wishListItemList() {
+            return {
+                currentWishListData: null,
+                selectedItem: false,
+                selectedItemIds: [],
+                singleSelectedItemId: [],
+                selectUnselectAllItems: null,
+                isCopySelectedItems: false,
+                isMoveSelectedItems: false,
+                copyAction: null,
+                moveAction: null,
+                copyWishListId: null,
+                moveWishListId: null,
+                productQtyList: [],
+                isSingleAction: false,
+                itemCardColumns: JSON.parse('<?= \json_encode($columnBlockNames) ?>'),
+                showItemSelectBlock: {},
+                wishlistItems: JSON.parse('<?= \json_encode($block->getWishlistItems()->getData()) ?>'),
+                init: function () {
+                    this.$watch('selectedItemIds', (value) => {
+                        if (value) {
+                            this.$dispatch('amasty-share-selected-item-ids', {selectedItemIds: value});
+                        }
+                    });
+                    this.$watch('selectUnselectAllItems', (value, oldValue) => {
+                        if (value && value !== oldValue) {
+                            if (this.selectedItemIds.length) {
+                                this.uncheckCheckboxes();
+                                this.selectedItemIds = [];
+                            } else {
+                                const uncheckedItemCheckboxes = document.querySelectorAll('[data-amwishlist-js="item-checkbox"]:not(:checked)');
+                                uncheckedItemCheckboxes.forEach(checkbox => {
+                                    checkbox.checked = true;
+                                    this.selectedItemIds.push(parseInt(checkbox.dataset.itemId));
+                                });
+                            }
+                        }
+                    });
+                    this.$watch('isCopySelectedItems', (value) => {
+                        if (value) {
+                            this.isCopySelectedItems = false;
+                            this.copySelectedItems();
+                        }
+                    });
+                    this.$watch('isMoveSelectedItems', (value) => {
+                        if (value) {
+                            this.isMoveSelectedItems = false;
+                            this.moveSelectedItems();
+                        }
+                    });
+                    this.$nextTick(() => {
+                        this.wishlistItems.forEach((item) => {
+                            this.productQtyList[item.wishlist_item_id] = parseInt(item.qty);
+                        });
+                    });
+                },
+                uncheckCheckboxes: function () {
+                    const checkedItemCheckboxes = document.querySelectorAll('[data-amwishlist-js="item-checkbox"]:checked');
+                    checkedItemCheckboxes.forEach(checkbox => {
+                        checkbox.checked = false;
+                    });
+                },
+                addNewItemToWishlist: function (newItem) {
+                    let alreadyInList = false;
+                    this.wishlistItems.forEach((amItem) => {
+                        if (amItem.wishlist_item_id === newItem.wishlist_item_id) {
+                            alreadyInList = true;
+                            this.productQtyList[newItem.wishlist_item_id] = parseInt(newItem.qty);
+                        }
+                    })
+
+                    if (!alreadyInList) {
+                        this.wishlistItems.push(newItem);
+                        this.productQtyList[newItem.wishlist_item_id] = parseInt(newItem.qty);
+                    }
+
+                    this.$dispatch('reload-customer-section-data');
+                },
+                deleteMigratedItemsFromList: function () {
+                    if (this.selectedItemIds.length) {
+                        this.selectedItemIds.forEach((itemId) => {
+                            let index = this.wishlistItems.findIndex((item) => itemId == item.wishlist_item_id);
+
+                            if (index !== -1) {
+                                this.wishlistItems.splice(index, 1);
+                            }
+                        });
+                    }
+
+                    this.selectedItemIds = [];
+                    this.$dispatch('reload-customer-section-data');
+                    this.uncheckCheckboxes();
+                },
+                selectItem: function (itemId) {
+                    if (this.selectedItemIds.includes(itemId)) {
+                        const index = this.selectedItemIds.indexOf(itemId);
+
+                        if (index > -1) {
+                            this.selectedItemIds.splice(index, 1);
+                        }
+                    } else {
+                        this.selectedItemIds.push(itemId);
+                    }
+                },
+                isSelected: function (itemId) {
+                    return this.selectedItemIds.includes(itemId);
+                },
+                extractCopyData: function (data) {
+                    this.isCopySelectedItems = _.get(data, 'isCopySelectedItems');
+                    this.copyAction = _.get(data, 'copyItemData.action');
+                    this.copyWishListId = _.get(data, 'copyItemData.data.wishlist_id');
+                },
+                extractMoveData: function (data) {
+                    this.isMoveSelectedItems = _.get(data, 'isMoveSelectedItems');
+                    this.moveAction = _.get(data, 'moveItemData.action');
+                    this.moveWishListId = _.get(data, 'moveItemData.data.wishlist_id');
+                },
+                copySelectedItems: function () {
+                    this.$dispatch(
+                        'open-amasty-wishlist-popup',
+                        {
+                            actionEventData: {
+                                event: 'copy',
+                                itemIds: this.selectedItemIds,
+                                action: this.copyAction,
+                                wishlistId: this.copyWishListId,
+                                productQtyList: this.productQtyList
+                            }
+                        }
+                    );
+                },
+                moveSelectedItems: function () {
+                    this.$dispatch(
+                        'open-amasty-wishlist-popup',
+                        {
+                            actionEventData: {
+                                event: 'move',
+                                itemIds: this.selectedItemIds,
+                                action: this.moveAction,
+                                wishlistId: this.moveWishListId,
+                                productQtyList: this.productQtyList
+                            }
+                        }
+                    );
+                },
+                copySingleItem: function (itemId) {
+                    this.selectedItemIds.push(itemId);
+                    this.copyAction = '<?= $block->getUrl('mwishlist/item/copy') ?>';
+                    this.copyWishListId = this.currentWishListData.wishlist_id;
+                    this.copySelectedItems();
+                },
+                moveSingleItem: function (itemId) {
+                    this.selectedItemIds.push(itemId);
+                    this.moveAction = '<?= $block->getUrl('mwishlist/item/move') ?>';
+                    this.moveWishListId = this.currentWishListData.wishlist_id;
+                    this.moveSelectedItems();
+                },
+                deleteSingleItem: function (itemId) {
+                    this.selectedItemIds.push(itemId);
+                    let payload = {
+                        'item': itemId,
+                        'wishlist_id': this.currentWishListData.wishlist_id,
+                        'form_key': hyva.getFormKey(),
+                        'block': 'customer.wishlist'
+                    };
+                    fetch(
+                        '<?= $block->getUrl('mwishlist/item/remove') ?>',
+                        {
+                            method: 'POST',
+                            body: this.buildFormData(payload)
+                        }
+                    ).then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    }).then(data => {
+                        this.$dispatch('amasty-delete-items-by-id');
+                    }).catch(error => {
+                        console.error('Error while deleting item from wishlist:' + error);
+                    });
+                },
+                buildFormData: function (object) {
+                    const formData = new FormData();
+                    Object.entries(object).forEach(([key, value]) => {
+                        formData.append(key, value);
+                    });
+
+                    return formData;
+                },
+                fetchItemColumnBlocks: function (wishlistItem, blockList, targetElement) {
+                    return fetch('<?= $escaper->escapeUrl($block->getUrl('mwishlist/item/columnRender')) ?>', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            form_key: hyva.getFormKey(),
+                            blocks: blockList,
+                            item: wishlistItem
+                        })
+                    }).then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response issues');
+                        }
+
+                        return response.text();
+                    }).then((data) => {
+                        targetElement.innerHTML = '';
+                        const scriptContainer = document.querySelector('.amasty-mwishlist-script-container');
+                        const parsedHTML = new DOMParser().parseFromString(data, 'text/html');
+                        let scripts = parsedHTML.body.querySelectorAll('script');
+
+                        if (scripts.length) {
+                            scripts.forEach((script) => {
+                                const scriptTag = document.createElement('script');
+                                scriptTag.innerHTML = script.innerHTML;
+                                scriptContainer.appendChild(scriptTag);
+                                script.remove();
+                            });
+                        }
+
+                        return parsedHTML.body.innerHTML;
+                    });
+                }
+            }
+        }
+    </script>
+<?php endif ?>

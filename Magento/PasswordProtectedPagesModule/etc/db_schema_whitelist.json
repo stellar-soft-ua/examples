@@ -1,0 +1,13 @@
+{
+    "al_customer_attempts_password": {
+        "column": {
+            "entity_id": true,
+            "customer_id": true,
+            "attempts": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "AL_CSTR_ATTEMPTS_PASSWORD_CSTR_ID_CSTR_ENTT_ENTT_ID": true
+        }
+    }
+}

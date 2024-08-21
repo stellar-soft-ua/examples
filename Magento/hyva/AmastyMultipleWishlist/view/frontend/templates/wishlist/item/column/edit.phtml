@@ -1,0 +1,23 @@
+<?php
+
+use Magento\Framework\Escaper;
+use Magento\Wishlist\Block\Customer\Wishlist\Item\Column\Edit;
+use Magento\Wishlist\Model\Item;
+
+/**
+ * @var Escaper $escaper
+ * @var Edit $block
+ * @var Item $item
+ */
+
+$item = $block->getItem();
+$product = $item->getProduct();
+?>
+
+<?php if ($product->isVisibleInSiteVisibility()): ?>
+<li class="amwishlist-item">
+    <a class="amwishlist-button -clear" href="<?= $escaper->escapeUrl($block->getItemConfigureUrl($item)) ?>">
+        <?= $escaper->escapeHtml(__('Edit')) ?>
+    </a>
+</li>
+<?php endif ?>

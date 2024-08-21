@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="al_customer_attempts_password" resource="default" engine="innodb" comment="Count attempts password">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true"
+                comment="Entity Id"/>
+
+        <column xsi:type="int" name="customer_id"
+                unsigned="true"
+                nullable="false"
+                identity="false"
+                comment="Customer ID" />
+
+        <column xsi:type="int" name="attempts"
+                unsigned="true"
+                nullable="true"
+                identity="false"
+                comment="Count Attempts" />
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+
+        <constraint xsi:type="foreign"
+                    referenceId="AL_CSTR_ATTEMPTS_PASSWORD_CSTR_ID_CSTR_ENTT_ENTT_ID"
+                    table="al_customer_attempts_password"
+                    column="customer_id"
+                    referenceTable="customer_entity"
+                    referenceColumn="entity_id"
+                    onDelete="CASCADE"/>
+    </table>
+</schema>

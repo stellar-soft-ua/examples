@@ -1,0 +1,59 @@
+<?php
+
+use Magento\Framework\Escaper;
+use Amasty\MWishlist\Block\Account\Wishlist\RecentlyList;
+
+/**
+ * @var Escaper $escaper
+ * @var RecentlyList $block
+ */
+?>
+<section x-data="recentlyUpdatedWishLists()"
+         class="amwishlist-list-block -recently-viewed"
+         @amasty-share-recently-lists.window="extractRecentlyUpdatedListsData($event.detail.recentlyLists)"
+         @amasty-current-wislist-data.window="currentWishListData=$event.detail.currentWishListData">
+
+    <h4 class="amwishlist-title" data-bind="i18n: 'Recently Updated Lists'">
+        <?= $escaper->escapeHtml(__('Recently Updated Lists')) ?>
+    </h4>
+    <ul class="amwishlist-list -active">
+        <template x-for="recentlyList in recentlyUpdatedWishLists">
+            <li class="amwishlist-item"
+                :class="{'-empty': !recentlyList.items_count}"
+                :data-label="!recentlyList.items_count ? '<?= $escaper->escapeHtml(__('The folder is empty')) ?>' : recentlyList.name[0]"
+                @click="window.location.href = recentlyList.url"
+                data-bind="
+               click: function() { window.location = url }">
+                <span class="amwishlist-name"
+                      x-text="recentlyList.name"></span>
+                <span class="amwishlist-desc"
+                      x-text="recentlyList.items_count + '<?= $escaper->escapeHtml(__(' items')) ?>'"></span>
+            </li>
+        </template>
+    </ul>
+</section>
+<script>
+    function recentlyUpdatedWishLists() {
+        return {
+            currentWishListData: null,
+            maxListQty: 6,
+            recentlyUpdatedWishLists: [],
+            extractRecentlyUpdatedListsData: function (recentlyLists) {
+                this.recentlyUpdatedWishLists = [];
+                if (recentlyLists.length) {
+                    Object.values(recentlyLists).forEach((item, index) => {
+                        if (item.wishlist_id === this.currentWishListData.wishlist_id || index >= this.maxListQty) {
+                            return;
+                        }
+                        let listItem = {
+                            'name': item.name,
+                            'items_count': item.items_count,
+                            'url': item.url
+                        };
+                        this.recentlyUpdatedWishLists.push(listItem);
+                    })
+                }
+            }
+        }
+    }
+</script>

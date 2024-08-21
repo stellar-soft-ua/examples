@@ -1,0 +1,57 @@
+<?php
+
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Element\Template;
+
+/**
+ * @var Escaper $escaper
+ * @var Template $block
+ */
+?>
+<div class="amwishlist-list-block amwishlist-newlist-block">
+    <button class="amwishlist-button -clear -link -plus"
+            @click="displayAddNewWishlist =! displayAddNewWishlist">
+        <?= $escaper->escapeHtml(__('Create New List')) ?>
+    </button>
+
+    <div class="amwishlist-newlist" x-show="displayAddNewWishlist" x-cloak>
+        <input class="amwishlist-input"
+               placeholder="<?= $escaper->escapeHtml(__('Enter List name')) ?>"
+               type="text"
+               @input="isValidationFinished = false"
+               x-model="newListName"
+        >
+        <button class="amwishlist-button -fill -primary -add"
+                :class="{
+                    '-disabled': hasWishlistNameValidationError || !newListName || !isValidationFinished
+                }"
+                @click="addNewList(newListName)">
+            <?= $escaper->escapeHtml(__('Add')) ?>
+        </button>
+
+        <ul class="amwishlist-messages-list"
+            x-show="hasWishlistNameValidationError">
+            <li class="amwishlist-item"
+                x-text="wishlistNameValidationErrorMessage"></li>
+        </ul>
+    </div>
+    <div class="amwishlist-tabs-block -block">
+        <section class="amwishlist-content-tab -active">
+            <ul class="amwishlist-list">
+                <template x-for="shortList in shortLists">
+                    <li class="amwishlist-item"
+                        :data-label="getWishListData(shortList.id).count ? shortList.name[0] : '<?= $escaper->escapeHtml(__('The folder is empty')) ?>'"
+                        :data-id="shortList.id"
+                        :class="{
+                            '-active': activeWishListId && activeWishListId === shortList.id,
+                            '-empty': getWishListData(shortList.id).count === 0
+                        }"
+                        @click="activeWishListId = shortList.id">
+                        <span class="amwishlist-name" x-text="shortList.name"></span>
+                        <span class="amwishlist-desc" x-text="getWishListData(shortList.id).wishlist_desc"></span>
+                    </li>
+                </template>
+            </ul>
+        </section>
+    </div>
+</div>

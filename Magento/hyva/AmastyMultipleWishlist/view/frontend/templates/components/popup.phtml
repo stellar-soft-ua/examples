@@ -1,0 +1,395 @@
+<?php
+
+use Magento\Framework\Escaper;
+use Amasty\MWishlist\Block\Popup;
+
+/**
+ * @var Escaper $escaper
+ * @var Popup $block
+ */
+?>
+<aside class="amwishlist-popup-block"
+       x-data="initAmastyWishlistPopup()"
+       x-show="showPopup"
+       :class="{'-active': showPopup}"
+       @open-amasty-wishlist-popup.window = "handleOpenPopupAction($event.detail)"
+       @private-content-loaded.window="extractSectionData($event.detail.data)"
+       @add-new-list-customer-account.window="addNewList($event.detail.newListNameCustomerAccount, true)"
+       @amasty-validate-wishlist-name.window="isNameValid($event.detail.wishlistName)"
+       @amasty-delete-wish-list.window="deleteWishList($event.detail.element)"
+       @amasty-add-wishlist-to-cart.window="addToCart($event.detail.wishListId)"
+       @amasty-add-wishlist-single-item-to-cart.window="addToCartSingleItem($event.detail.element)"
+       @amasty-trigger-delete-wishlist-popup.window="popupType=$event.detail.popupType;handleOpenPopupAction({})"
+       x-cloak
+       data-ampopup-js="popup"
+       data-bind="
+            scope:'ampopup',
+            mageInit: {
+             'Magento_Ui/js/core/app': <?= $escaper->escapeHtml($block->getJsLayout()) ?>
+            }"
+       aria-hidden="true">
+    <?= $block->getChildHtml('amwishlist.popup.wrapper'); ?>
+</aside>
+<script>
+    function initAmastyWishlistPopup() {
+        return {
+            wishListEvent: 'add',
+            showPopup: false,
+            popupType: null,
+            popupDefaultType: 'add',
+            isCustomerLoggedIn: false,
+            productId: null,
+            displayAddNewWishlist: false,
+            privateContentData: null,
+            validateNewNameAction: 'mwishlist/wishlist/validateWishlistName',
+            shortLists: null,
+            wishListsData: null,
+            activeWishListId: null,
+            newListName: null,
+            wishlistNameValidationErrorMessage: null,
+            hasWishlistNameValidationError: false,
+            popupButtonLabel: '<?= $escaper->escapeHtml(__('Add to List')) ?>',
+            popupActionButtonLabelMap: {
+                'copy': '<?= $escaper->escapeHtml(__('Copy')) ?>',
+                'move': '<?= $escaper->escapeHtml(__('Move')) ?>',
+                'add': '<?= $escaper->escapeHtml(__('Add to List')) ?>',
+                'delete': '<?= $escaper->escapeHtml(__('OK')) ?>'
+            },
+            actionEventData: null,
+            elementStorage: null,
+            isValidationFinished: false,
+            handleOpenPopupAction: function (data) {
+                if (!this.isCustomerLoggedIn) {
+                    window.location.href = '<?= $escaper->escapeUrl($block->getUrl('customer/account/login')) ?>';
+                    return;
+                }
+                this.showPopup = true;
+
+                if (data.hasOwnProperty('productId')) {
+                    this.productId = data.productId;
+                }
+
+                if (data.actionEventData) {
+                    this.actionEventData = data.actionEventData;
+
+                    if (this.actionEventData.hasOwnProperty('element')) {
+                        this.elementStorage = this.actionEventData.element;
+                    }
+
+                    this.shortLists = Object.values(this.shortLists).filter((list) => list.id != this.actionEventData.wishlistId);
+                    this.wishListEvent = this.popupType = this.actionEventData.event;
+                    this.popupButtonLabel = this.popupActionButtonLabelMap[this.wishListEvent] ?? this.popupActionButtonLabelMap['add'];
+                }
+            },
+            init: function () {
+                let validateName;
+                this.$watch('newListName', (value, oldValue) => {
+                    if (value && value !== oldValue) {
+                        clearInterval(validateName);
+
+                        validateName = setTimeout(() => {
+                            this.isNameValid(value);
+                        }, 1000);
+                    }
+                });
+            },
+            extractSectionData: function (sectionData) {
+                this.shortLists = sectionData.multiplewishlist.short_list ?? [];
+                this.shortLists.sort((a, b) => parseInt(b.id) - parseInt(a.id));
+                this.wishListsData = sectionData.mwishlist.wishlist_list ?? [];
+                this.isCustomerLoggedIn = !!(sectionData.customer.signin_token) ?? false;
+                this.$dispatch('amasty-share-recently-lists', {recentlyLists: sectionData.mwishlist.recently_list ?? []});
+            },
+            deleteWishList: function (element) {
+                let deleteData = JSON.parse(element.dataset.mwishlistAjax);
+                deleteData.data.form_key = hyva.getFormKey();
+                fetch(
+                    deleteData.action,
+                    {
+                        method: 'POST',
+                        body: this.buildFormData(deleteData.data)
+                    }
+                ).then(response => {
+                    if (!response.ok) {
+                        throw new Error('Response issues');
+                    }
+
+                    return response.json();
+                }).then(data => {
+                    this.$dispatch('amasty-response-delete-wish-list', {isSuccess: true});
+                    window.location.href = '<?= $block->getUrl('mwishlist/index/index') ?>'
+                }).catch(error => {
+                    console.error('Error adding item to wishlist: ' + error);
+                });
+            },
+            getWishListData: function (wishListId) {
+                let count = 0;
+
+                if (this.wishListsData) {
+                    this.wishListsData.forEach(item => {
+                        if (Array.isArray(item)) {
+                            item.forEach(subitem => {
+                                if (wishListId == subitem.wishlist_id) {
+                                    count = subitem.items_count;
+                                }
+                            })
+                        }
+                    })
+                }
+
+                return {
+                    'wishlist_desc': hyva.str('<?= $escaper->escapeHtml(__('%1 items')) ?>', count),
+                    'count': count
+                }
+            },
+            addToWishList: function () {
+                const activeWishList = document.querySelector('.amwishlist-item.-active');
+                const wishListId = activeWishList.dataset.id;
+                const payload = {
+                    product: this.productId,
+                    uenc: hyva.getUenc(),
+                    form_key: hyva.getFormKey(),
+                    wishlist_id: wishListId
+                };
+                fetch('<?= $escaper->escapeUrl($block->getUrl('mwishlist/item/add')) ?>', {
+                    method: 'POST',
+                    body: this.buildFormData(payload)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response issues');
+                        }
+
+                        return response.json();
+                    })
+                    .then(data => {
+                        this.closePopup();
+                        this.$dispatch('reload-customer-section-data');
+                    })
+                    .catch(error => {
+                        console.error('Error adding item to wishlist:', error);
+                    });
+            },
+            moveToWishListFromCart: function () {
+                const activeWishList = document.querySelector('.amwishlist-item.-active');
+                const wishListId = activeWishList.dataset.id;
+                const payload = {
+                    uenc: hyva.getUenc(),
+                    form_key: hyva.getFormKey(),
+                    item: _.get(this.actionEventData, 'itemId'),
+                    wishlist_id: wishListId
+                };
+                fetch(_.get(this.actionEventData, 'action'),
+                    {
+                        method: 'POST',
+                        body: this.buildFormData(payload)
+                    }).then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response issues');
+                        }
+
+                        return response.json();
+                    }).then(data => {
+                        this.closePopup();
+                        this.$dispatch('reload-customer-section-data');
+                    }).catch(error => {
+                        console.error('Error adding item to wishlist:', error);
+                    });
+            },
+            addNewList: function (newListName, isExternalCall = false) {
+                if (isExternalCall) {
+                    this.isNameValid(newListName, true);
+                    if (this.hasWishlistNameValidationError) {
+                        return;
+                    }
+                }
+
+                const payload = {
+                    'wishlist[name]': newListName,
+                    'wishlist[type]': 0,
+                    'form_key': hyva.getFormKey()
+                };
+                fetch('<?= $escaper->escapeUrl($block->getUrl('mwishlist/wishlist/create')) ?>', {
+                    method: 'POST',
+                    body: this.buildFormData(payload)
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error('Response issues');
+                    }
+
+                    return response.json();
+                }).then(data => {
+                    this.displayAddNewWishlist = false;
+                    this.newListName = null;
+                    this.$dispatch('reload-customer-section-data');
+                }).catch(error => {
+                    console.error('Error adding item to wishlist: ' + error);
+                });
+            },
+            buildFormData: function (object) {
+                const formData = new FormData();
+                Object.entries(object).forEach(([key, value]) => {
+                    formData.append(key, value);
+                });
+
+                return formData;
+            },
+            closePopup: function () {
+                this.showPopup = false;
+                this.activeWishListId = false;
+                this.newListName = null;
+                this.popupType = this.popupDefaultType;
+            },
+            isNameValid: function (value, isExternalCall = false) {
+                let amValidationEventObject = {};
+                this.hasWishlistNameValidationError = false;
+                if (!value || this.isWhitespaceString(value)) {
+                    if (isExternalCall) {
+                        this.hasWishlistNameValidationError = true;
+                        amValidationEventObject = {
+                            hasWishlistNameValidationError: this.hasWishlistNameValidationError,
+                            wishlistNameValidationErrorMessage: '<?= $escaper->escapeHtml(__('Empty Value.')) ?>'
+                        };
+                        this.$dispatch('amasty-new-wishlist-name-validation-error', amValidationEventObject);
+                    }
+                    return;
+                }
+                this.wishlistNameValidationErrorMessage = null;
+                const payload = {
+                    'wishlist[name]': value,
+                    'custom': true,
+                    'form_key': hyva.getFormKey()
+                };
+                fetch('<?= $escaper->escapeUrl($block->getUrl('mwishlist/wishlist/validateWishlistName')) ?>', {
+                    method: 'POST',
+                    body: this.buildFormData(payload)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        this.isValidationFinished = true;
+                        this.hasWishlistNameValidationError = data.hasOwnProperty('errors') && data.errors.length;
+                        amValidationEventObject = {
+                            hasWishlistNameValidationError: this.hasWishlistNameValidationError
+                        };
+
+                        if (this.hasWishlistNameValidationError) {
+                            amValidationEventObject['wishlistNameValidationErrorMessage'] = this.wishlistNameValidationErrorMessage = data.errors.pop();
+                        }
+
+                        this.$dispatch('amasty-new-wishlist-name-validation-error', amValidationEventObject);
+                    })
+                    .catch(error => {
+                        console.error('Error adding item to wishlist:' + error);
+                    });
+            },
+            migrateWishlistItemsAction: function () {
+                let payload = {
+                    'wishlist_id': this.actionEventData.wishlistId,
+                    'form_key': hyva.getFormKey(),
+                    'to_wishlist_id': this.activeWishListId
+                };
+                payload = this.addItemIdsAndQtys(payload, this.actionEventData);
+                fetch(
+                    this.actionEventData.action,
+                        {
+                            method: 'POST',
+                            body: this.buildFormData(payload)
+                        }
+                    ).then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    }).then(data => {
+                        if (this.wishListEvent === 'move') {
+                            this.$dispatch('amasty-delete-items-by-id');
+                        }
+                        this.$dispatch('reload-customer-section-data');
+                        this.closePopup();
+                    }).catch(error => {
+                        console.error('Error adding item to wishlist:' + error);
+                    });
+            },
+            addItemIdsAndQtys: function (payload, copyData) {
+                Object.values(copyData.itemIds).forEach(id => {
+                    payload[`selected[${id}]`] = 'on';
+                });
+                copyData.productQtyList.forEach(((element, index) => {
+                    payload[`qty[${index}]`] = element;
+                }))
+
+                return payload;
+            },
+            executeWishListEvent: function () {
+                if (this.wishListEvent === 'add') {
+                    this.addToWishList();
+                }
+                if (this.wishListEvent === 'move_from_cart') {
+                    this.moveToWishListFromCart();
+                }
+                if (['move', 'copy'].includes(this.wishListEvent)) {
+                    this.migrateWishlistItemsAction();
+                }
+            },
+            addToCart: function (wishListId) {
+                let payload = {
+                    'wishlist_id': wishListId,
+                    'form_key': hyva.getFormKey(),
+                    'uenc': hyva.getUenc()
+                };
+                fetch(
+                    '<?= $escaper->escapeUrl($block->getUrl('wishlist/index/allcart')) ?>',
+                    {
+                        method: 'POST',
+                        body: this.buildFormData(payload)
+                    }
+                ).then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    return response.text();
+                }).then(data => {
+                    window.location.reload();
+                }).catch(error => {
+                    console.error('Error adding item to wishlist. Reason: ' + error);
+                });
+            },
+            addToCartSingleItem: function (element) {
+                const itemData = JSON.parse(element.dataset.mwishlistAjax);
+                let payload = {
+                    'item': _.get(itemData, 'data.item'),
+                    'qty': _.get(itemData, 'data.qty'),
+                    'wishlist_id': _.get(itemData, 'data.wishlist_id'),
+                    'block': _.get(itemData, 'data.block'),
+                    'component': _.get(itemData, 'data.component'),
+                    'form_key': hyva.getFormKey()
+                };
+                fetch(
+                    _.get(itemData, 'action'),
+                    {
+                        method: 'POST',
+                        body: this.buildFormData(payload)
+                    }
+                ).then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                }).then(data => {
+                    window.location.reload();
+                }).catch(error => {
+                    console.error('Error adding item to cart:' + error);
+                });
+            },
+            isWhitespaceString: function (string) {
+                return !string.replace(/\s/g, '').length;
+            }
+        }
+    }
+</script>

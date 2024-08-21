@@ -1,0 +1,58 @@
+<?php
+
+use Amasty\MWishlist\Block\Account\Wishlist\Items;
+use Magento\Framework\Escaper;
+
+/**
+ * @var Items $block
+ * @var Escaper $escaper
+ */
+?>
+<div class="amasty-mwishlist-script-container"></div>
+<div class="amwishlist-product-grid products-grid wishlist">
+    <template x-if="wishlistItems.length > 0">
+        <ol class="amwishlist-items">
+            <template x-for="wishlistItem in wishlistItems">
+                <li :id="'item_' + wishlistItem.wishlist_item_id"
+                    class="amwishlist-item"
+                    :class="{'-active': isSelected(wishlistItem.wishlist_item_id)}"
+                    data-row="amwishlist-item product-item"
+                    data-amwishlist-js="product-item">
+                    <div class="amwishlist-toolbar-block" data-container="product-grid">
+                        <label class="amwishlist-checkbox-block">
+                            <input class="amwishlist-input"
+                                   @click="selectItem(wishlistItem.wishlist_item_id)"
+                                   type="checkbox"
+                                   name="selected[wishlistItem.wishlist_item_id]"
+                                   :data-item-id="wishlistItem.wishlist_item_id"
+                                   data-amwishlist-js="item-checkbox" />
+                            <span class="amwishlist-checker"></span>
+                        </label>
+
+                        <button class="amwishlist-button -more -clear"
+                                @click="showItemSelectBlock[wishlistItem.wishlist_item_id] = !!showItemSelectBlock"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                data-mage-init='{"dropdown":{}}'
+                                type="button">
+                        </button>
+
+                        <ul x-show="showItemSelectBlock[wishlistItem.wishlist_item_id]"
+                            @click.outside="showItemSelectBlock[wishlistItem.wishlist_item_id] = false"
+                            class="amwishlist-select-block" data-target="dropdown" aria-hidden="true"
+                            x-html="fetchItemColumnBlocks(wishlistItem, ['edit','copy', 'move','remove'], $el)"
+                            x-cloak>
+                        </ul>
+                    </div>
+                    <div x-html="fetchItemColumnBlocks(wishlistItem, itemCardColumns, $el)" x-cloak>
+                    </div>
+                </li>
+            </template>
+        </ol>
+    </template>
+    <template x-if="!wishlistItems.length">
+        <div class="amwishlist-message message info empty">
+            <span><?= $escaper->escapeHtml(__('This Wish List has no Items')) ?></span>
+        </div>
+    </template>
+</div>

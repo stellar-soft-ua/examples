@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <type name="AL\ProductPassword\Service\ShowPasswordNowValidator">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="IsEnabled" xsi:type="object">AL\ProductPassword\Service\ShowPasswordNowValidator\IsEnabled</item>
+                <item name="IsExistingProductPage" xsi:type="object">AL\ProductPassword\Service\ShowPasswordNowValidator\IsExistingProductPage</item>
+                <item name="IsCategoryProtected" xsi:type="object">AL\ProductPassword\Service\ShowPasswordNowValidator\IsCategoryProtected</item>
+                <item name="IsCustomerGroupProtected" xsi:type="object">AL\ProductPassword\Service\ShowPasswordNowValidator\IsCustomerGroupProtected</item>
+                <item name="IsPasswordNotAccepted" xsi:type="object">AL\ProductPassword\Service\ShowPasswordNowValidator\IsPasswordNotAccepted</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

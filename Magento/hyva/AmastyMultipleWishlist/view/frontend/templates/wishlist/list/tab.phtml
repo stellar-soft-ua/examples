@@ -1,0 +1,136 @@
+<?php
+
+use Magento\Framework\Escaper;
+use Amasty\MWishlist\Block\Account\Wishlist\WishlistList\Tab;
+use Amasty\MWishlist\Model\Wishlist;
+
+/**
+ * @var Escaper $escaper
+ * @var Tab $block
+ * @var Wishlist $wishlist
+ */
+
+$wishlists = $block->getWishlists();
+?>
+
+<section class="amwishlist-content-tab <?= /** @noEscape */ $block->isActiveTab() ? '-active' : '' ?>"
+         data-amwishlist-js="content-tab"
+         data-tab-id="<?= /** @noEscape */ $block->getListType() ?>">
+    <?php if ($wishlists->getSize()): ?>
+        <ul class="amwishlist-list">
+            <?php foreach ($wishlists as $wishlist): ?>
+                <li x-data="initWishListItem()"
+                    class="amwishlist-item">
+                    <a href="<?= $escaper->escapeHtml($block->getViewUrl($wishlist->getWishlistId())) ?>"
+                       title="<?= $escaper->escapeHtml(__('Go to wishlist page')) ?>">
+                        <?php $images = $block->getItemImages($wishlist) ?>
+                        <figure class="amwishlist-preview-block <?= empty($images) ? '-empty' : '' ?>"
+                                data-label="<?= $escaper->escapeHtml(__('The folder is empty')) ?>">
+                            <?php foreach ($images as $image): ?>
+                                <img class="amwishlist-image"
+                                     src="<?= $escaper->escapeUrl($image) ?>"
+                                     alt="<?= $escaper->escapeHtml(__('Product Image')) ?>">
+                            <?php endforeach; ?>
+                        </figure>
+                    </a>
+                    <article>
+                        <section class="amwishlist-title">
+                            <p class="amwishlist-name"><?= $escaper->escapeHtml($block->renderName($wishlist->getName())) ?></p>
+                            <button class="amwishlist-button -more -clear"
+                                    @click="showItemDropdown = ! showItemDropdown"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    data-mage-init='{"dropdown":{}}'
+                                    title="<?= $escaper->escapeHtml(__('Open list of actions')) ?>"
+                                    type="button">
+                            </button>
+
+                            <ul x-show="showItemDropdown"
+                                @click.outside="showItemDropdown = false"
+                                class="amwishlist-select-block"
+                                data-target="dropdown"
+                                aria-hidden="true">
+                                <li class="amwishlist-item">
+                                    <a class="amwishlist-button -clear"
+                                       href="<?= $escaper->escapeHtml($block->getViewUrl($wishlist->getWishlistId())) ?>"
+                                       title="<?= $escaper->escapeHtml(__('View wishlist')) ?>">
+                                        <?= $escaper->escapeHtml(__('View')) ?>
+                                    </a>
+                                </li>
+                                <?php if ($block->isDeleteable($wishlist->getWishlistId())): ?>
+                                    <li class="amwishlist-item -error">
+                                        <a class="amwishlist-button -clear"
+                                           @click.prevent="$dispatch('open-amasty-wishlist-popup', {
+                                                actionEventData: {
+                                                    event: 'delete',
+                                                    wishlistId: '<?= $escaper->escapeHtml($wishlist->getWishlistId()) ?>',
+                                                    element: $el
+                                                }
+                                            })"
+                                           data-mwishlist-delete
+                                           data-mwishlist-ajax='<?= /** @noEscape */
+                                           $block->getDeleteData($wishlist->getWishlistId()) ?>'
+                                           title="<?= $escaper->escapeHtml(__('Delete wishlist')) ?>"
+                                           href="#">
+                                            <?= $escaper->escapeHtml(__('Delete')) ?>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
+                            </ul>
+                        </section>
+
+                        <span class="amwishlist-desc">
+                            <?= $escaper->escapeHtml(__('%1 items', $wishlist->getItemCollection()->getSize())) ?>
+                        </span>
+                        <a class="amwishlist-button -fill -primary -add"
+                           @click="$dispatch('amasty-add-wishlist-to-cart', {wishListId: <?= $wishlist->getWishlistId() ?>})"
+                           href="#"
+                           title="<?= $escaper->escapeHtml(__('Add to Cart')) ?>"
+                           data-post='<?= /** @noEscape */ $block->getAddToCartData($wishlist->getWishlistId()) ?>'>
+                            <?= $escaper->escapeHtml(__('Add to Cart')) ?>
+                        </a>
+                    </article>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <?= $block->getPagerHtml() ?>
+    <?php else: ?>
+        <div class="message info empty"><span><?= $escaper->escapeHtml($block->getEmptyMessage()) ?></span></div>
+    <?php endif ?>
+</section>
+<script>
+    function initWishListItem() {
+        return {
+            showItemDropdown: false,
+            deleteWishListItem: function (element) {
+                let deleteData = JSON.parse(element.dataset.mwishlistAjax);
+                deleteData.data.form_key = hyva.getFormKey();
+                fetch(
+                    deleteData.action,
+                    {
+                        method: 'POST',
+                        body: this.buildFormData(deleteData.data)
+                    }
+                ).then(response => {
+                    if (!response.ok) {
+                        throw new Error('Response issues');
+                    }
+
+                    return response.json();
+                }).then(data => {
+                    this.$dispatch('reload-customer-section-data');
+                }).catch(error => {
+                    console.error('Error adding item to wishlist: ' + error);
+                });
+            },
+            buildFormData: function (object) {
+                const formData = new FormData();
+                Object.entries(object).forEach(([key, value]) => {
+                    formData.append(key, value);
+                });
+
+                return formData;
+            }
+        }
+    }
+</script>

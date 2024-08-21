@@ -1,0 +1,23 @@
+<?php
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\Wishlist;
+use Magento\Framework\Escaper;
+
+/** @var ViewModelRegistry $viewModels */
+/** @var Escaper $escaper */
+
+/** @var Wishlist $wishlistViewModel */
+$wishlistViewModel = $viewModels->require(Wishlist::class);
+?>
+<?php if ($wishlistViewModel->isEnabled()): ?>
+    <script>
+        function initWishlist() {
+            return {
+                addToWishlist(productId) {
+                    this.$dispatch('open-amasty-wishlist-popup', {productId: productId})
+                }
+            }
+        }
+    </script>
+<?php endif; ?>

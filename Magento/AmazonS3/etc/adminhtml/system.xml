@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="ArtemLytv_customer" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Customer</label>
+            <tab>ArtemLytv</tab>
+            <resource>ArtemLytv_Customer::config</resource>
+            <group id="aws_s3_credentials" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>AWS S3 Credentials</label>
+                <field id="aws_access_key" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Access key</label>
+                </field>
+                <field id="aws_secret_key" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Secret Key</label>
+                </field>
+                <field id="aws_region" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>AWS Region</label>
+                </field>
+                <field id="aws_lambda_function" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>AWS Lambda Client Function Name</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

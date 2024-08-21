@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="ArtemLytv\AmazonS3\Service\AwsS3Service">
+        <arguments>
+            <argument name="logger" xsi:type="object">your_virtualtype_exception_logger</argument>
+        </arguments>
+    </type>
+    <type name="ArtemLytv\AmazonS3\Service\S3FileExtractor">
+        <arguments>
+            <argument name="logger" xsi:type="object">your_virtualtype_exception_logger</argument>
+            <argument name="serializer" xsi:type="object">Magento\Framework\Serialize\Serializer\Json</argument>
+        </arguments>
+    </type>
+</config>

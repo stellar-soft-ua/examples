@@ -1,0 +1,19 @@
+<?php
+
+use Magento\Framework\Escaper;
+use Amasty\MWishlist\Block\Account\Wishlist\Item\Column\Copy;
+
+/**
+ * @var Escaper $escaper
+ * @var Copy $block
+ */
+?>
+
+<li @click="copySingleItem('<?= $this->getItem()->getId() ?>')" class="amwishlist-item">
+    <a class="amwishlist-button -clear"
+       title="<?= $escaper->escapeHtmlAttr(__('Copy Item')) ?>"
+       data-mwishlist-ajax='<?= /** @noEscape */ $block->getPostData() ?>'
+       data-amwishlist-js="item-copy">
+        <?= $escaper->escapeHtml(__('Copy')) ?>
+    </a>
+</li>

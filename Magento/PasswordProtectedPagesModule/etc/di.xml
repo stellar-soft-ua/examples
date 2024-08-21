@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd" >
+    <preference for="AL\ProductPassword\Api\Data\PasswordAttemptsInterface"
+                type="AL\ProductPassword\Model\PasswordAttempts"/>
+    <preference for="AL\ProductPassword\Api\Data\PasswordShippingResultInterface"
+                type="AL\ProductPassword\Model\ResourceModel\PasswordAttempts\Collection"/>
+    <preference for="AL\ProductPassword\Api\PasswordAttemptsRepositoryInterface"
+                type="AL\ProductPassword\Service\PasswordAttemptsRepository"/>
+    <preference for="AL\ProductPassword\Api\Data\Config\ConfigDataInterface"
+                type="AL\ProductPassword\Service\Config\ConfigData"/>
+    <preference for="AL\ProductPassword\Api\PasswordAttemptsManagementInterface"
+                type="AL\ProductPassword\Service\PasswordAttemptsManagement"/>
+</config>

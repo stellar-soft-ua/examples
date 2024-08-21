@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <ArtemLytv_customer>
+            <aws_s3_credentials>
+                <aws_access_key>XXXXXXXXXXXXX</aws_access_key>
+                <aws_secret_key>XXXXXXXXXXXXXXXXXXXXXX</aws_secret_key>
+                <aws_region>xxxxxxxx</aws_region>
+                <aws_lambda_function>xxxxxxxx</aws_lambda_function>
+            </aws_s3_credentials>
+        </ArtemLytv_customer>
+    </default>
+</config>

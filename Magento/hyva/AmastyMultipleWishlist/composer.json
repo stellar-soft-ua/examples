@@ -1,0 +1,21 @@
+{
+  "name": "AL/amasty-multiple-wishlist",
+  "version": "1.0.0",
+  "description": "N/A",
+  "type": "magento2-module",
+  "require": {
+    "magento/framework": "*",
+    "amasty/stockstatus": "2.3.*"
+  },
+  "license": [
+    "Proprietary"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "AL\\AmastyMultipleWishlist\\": ""
+    }
+  }
+}

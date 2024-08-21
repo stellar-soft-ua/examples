@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="catalog">
+            <group id="al_product_password" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1">
+                <label>Product Page Password Protection</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="1" showInDefault="1" canRestore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="password_product_page" translate="label" type="obscure" sortOrder="10" showInDefault="1" showInWebsite="1">
+                    <label>Password</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="category_multiselect" translate="label" type="multiselect" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="10">
+                    <label>Category Multi Select Dropdown</label>
+                    <source_model>AL\ProductPassword\Model\Adminhtml\Config\Category\Category</source_model>
+                    <frontend_model>AL\ProductPassword\Block\Adminhtml\Config\MultiUiSelectCategory</frontend_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+                <field id="customer_group_list" translate="label" type="multiselect" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Customer Groups</label>
+                    <source_model>AL\ProductPassword\Model\Adminhtml\Config\Customer\Group</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
